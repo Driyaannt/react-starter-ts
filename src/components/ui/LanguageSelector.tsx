@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLanguage, availableLanguages } from "@/context/LanguageContext";
 import type { Language } from "@/context/LanguageContext";
 import { Button } from "@/components/ui/button";
+import { handleDropdownAriaHidden } from "@/utils/dropdownAriaFix";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +37,14 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
   if (variant === "header") {
     return (
-      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenu 
+        open={isOpen} 
+        onOpenChange={(open) => {
+          setIsOpen(open);
+          // Fix aria-hidden focus conflicts
+          handleDropdownAriaHidden(open);
+        }}
+      >
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
@@ -54,6 +62,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
         <DropdownMenuContent
           align="end"
+          side="bottom"
+          sideOffset={8}
           className="w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-lg backdrop-blur-sm z-[70]"
         >
           <div className="p-2">
@@ -100,7 +110,14 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
             {t.profile.languageDesc}
           </p>
         </div>
-        <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+        <DropdownMenu 
+          open={isOpen} 
+          onOpenChange={(open) => {
+            setIsOpen(open);
+            // Fix aria-hidden focus conflicts
+            handleDropdownAriaHidden(open);
+          }}
+        >
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
@@ -118,6 +135,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
           <DropdownMenuContent
             align="end"
+            side="bottom"
+            sideOffset={8}
             className="w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg"
           >
             {availableLanguages.map((language) => (

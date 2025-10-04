@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import CustomButton from "@/components/ui/CustomButton";
 import { useButtonLoading } from "@/hooks/useButtonLoading";
 import { useLanguage } from "@/context/LanguageContext";
+import { getForceBottomDropdownProps } from "@/utils/dropdownUtils";
 import {
   UserPlus,
   Search,
@@ -415,6 +416,8 @@ const UsersPage: React.FC = () => {
                   <DropdownMenuContent
                     className="w-[140px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-lg"
                     align="start"
+                    side="bottom"
+                    sideOffset={8}
                   >
                     <DropdownMenuItem
                       className="cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100"
@@ -483,6 +486,19 @@ const UsersPage: React.FC = () => {
                   <DropdownMenuContent
                     className="w-[140px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-lg"
                     align="start"
+                    side="bottom"
+                    sideOffset={8}
+                    avoidCollisions={false}
+                    sticky="always"
+                    collisionPadding={0}
+                    style={{
+                      position: 'fixed',
+                      transformOrigin: 'top center',
+                      zIndex: 9999,
+                    }}
+                    onPointerDownOutside={(e) => {
+                      // Don't prevent default - allow closing
+                    }}
                   >
                     <DropdownMenuItem
                       className="cursor-pointer text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100"

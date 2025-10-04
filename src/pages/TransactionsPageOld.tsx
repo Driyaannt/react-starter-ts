@@ -796,7 +796,7 @@ const TransactionsPage: React.FC = () => {
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
+                          <DropdownMenuContent align="end" side="bottom" sideOffset={8}>
                             <DropdownMenuItem className="flex items-center gap-2">
                               <Eye className="h-4 w-4" />
                               {t.transactions.viewDetails}

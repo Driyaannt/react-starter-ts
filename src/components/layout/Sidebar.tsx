@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/context/LanguageContext";
@@ -14,6 +15,7 @@ import {
   CreditCard,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ROUTES } from "../../constants/routes";
 
 interface MenuItem {
   id: string;
@@ -25,15 +27,15 @@ interface MenuItem {
 
 interface SidebarProps {
   activeItem?: string;
-  onItemClick?: (itemId: string) => void;
   onToggle?: (collapsed: boolean) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
   activeItem = "dashboard",
-  onItemClick,
   onToggle,
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useLanguage();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [tooltip, setTooltip] = useState<{
@@ -55,52 +57,47 @@ const Sidebar: React.FC<SidebarProps> = ({
       id: "dashboard",
       label: t.nav.dashboard,
       icon: BarChart3,
-      path: "/dashboard",
+      path: ROUTES.DASHBOARD,
     },
     {
       id: "users",
       label: t.nav.userManagement,
       icon: Users,
-      path: "/users",
+      path: ROUTES.USERS,
       badge: "12",
     },
-    { id: "users-page", label: t.nav.users, icon: Users, path: "/users-page" },
-    { id: "products", label: t.nav.products, icon: Package, path: "/products" },
+    { id: "users-page", label: t.nav.users, icon: Users, path: ROUTES.USERS_PAGE },
+    { id: "products", label: t.nav.products, icon: Package, path: ROUTES.PRODUCTS },
     {
       id: "orders",
       label: t.nav.orders,
       icon: ShoppingCart,
-      path: "/orders",
+      path: ROUTES.ORDERS,
       badge: "3",
     },
     {
       id: "transactions",
       label: t.nav.transactions,
       icon: CreditCard,
-      path: "/transactions",
+      path: ROUTES.TRANSACTIONS,
       badge: "5",
     },
     {
       id: "analytics",
       label: t.nav.analytics,
       icon: TrendingUp,
-      path: "/analytics",
+      path: ROUTES.ANALYTICS,
     },
     {
       id: "settings",
       label: t.nav.settings,
       icon: Settings,
-      path: "/settings",
+      path: ROUTES.SETTINGS,
     },
   ];
 
-  const handleItemClick = (itemId: string) => {
-    if (onItemClick) {
-      onItemClick(itemId);
-    } else {
-      // Fallback behavior
-      console.log(`Navigating to: ${itemId}`);
-    }
+  const handleItemClick = (path: string) => {
+    navigate(path);
   };
 
   const handleMouseEnter = (
@@ -173,7 +170,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     !isActive &&
                       "hover:bg-blue-100/50 dark:hover:bg-blue-900/30 hover:text-blue-800 dark:hover:text-blue-300 hover:shadow-lg hover:border-blue-200/50 dark:hover:border-blue-700/50 hover:scale-[1.02]"
                   )}
-                  onClick={() => handleItemClick(item.id)}
+                  onClick={() => handleItemClick(item.path)}
                   onMouseEnter={(e) => handleMouseEnter(e, item)}
                   onMouseLeave={handleMouseLeave}
                 >

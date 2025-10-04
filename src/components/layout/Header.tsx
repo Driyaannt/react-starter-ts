@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useLanguage } from "../../context/LanguageContext";
+import { useProfile } from "@/context/ProfileContext";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { handleDropdownAriaHidden } from "@/utils/dropdownAriaFix";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,14 +34,15 @@ import {
 } from "lucide-react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import LanguageSelector from "@/components/ui/LanguageSelector";
+import { ROUTES } from "../../constants/routes";
 
-interface HeaderProps {
-  onPageChange?: (pageId: string) => void;
-}
+interface HeaderProps {}
 
-const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
+const Header: React.FC<HeaderProps> = () => {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { t } = useLanguage();
+  const { profilePhoto } = useProfile();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
@@ -75,13 +79,27 @@ const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
           {/* Separator */}
           <div className="h-6 w-px bg-white/20 dark:bg-gray-600/40"></div>
 
-          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+          <DropdownMenu 
+            open={dropdownOpen} 
+            onOpenChange={(open) => {
+              setDropdownOpen(open);
+              // Fix aria-hidden focus conflicts
+              handleDropdownAriaHidden(open);
+            }}
+          >
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 className="flex items-center gap-3 hover:bg-white/10 transition-colors duration-200"
               >
                 <Avatar className="h-8 w-8">
+                  {profilePhoto && (
+                    <AvatarImage 
+                      src={profilePhoto} 
+                      alt="Profile photo" 
+                      className="object-cover"
+                    />
+                  )}
                   <AvatarFallback className="bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 text-sm font-medium">
                     {user?.name
                       ?.split(" ")
@@ -103,11 +121,21 @@ const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
             <DropdownMenuContent
               className="w-64 mr-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-lg backdrop-blur-sm z-[60]"
               align="end"
-              sideOffset={8}
+              side="bottom"
+              sideOffset={12}
+              avoidCollisions={false}
+              sticky="always"
             >
               <DropdownMenuLabel className="font-semibold bg-gray-50 text-gray-900">
                 <div className="flex items-center gap-2">
                   <Avatar className="h-6 w-6">
+                    {profilePhoto && (
+                      <AvatarImage 
+                        src={profilePhoto} 
+                        alt="Profile photo" 
+                        className="object-cover"
+                      />
+                    )}
                     <AvatarFallback className="bg-blue-100 text-blue-700 text-xs">
                       {user?.name
                         ?.split(" ")
@@ -127,7 +155,7 @@ const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
 
               <DropdownMenuItem
                 className="flex items-center gap-2 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                onClick={() => onPageChange?.("profile-settings")}
+                onClick={() => navigate(ROUTES.PROFILE_SETTINGS)}
               >
                 <User className="h-4 w-4" />
                 <span>{t.nav.profileSettings}</span>

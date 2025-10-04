@@ -307,7 +307,7 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" side="bottom" sideOffset={8}>
             <DropdownMenuLabel>
               {t.transactions.actions.title}
             </DropdownMenuLabel>
@@ -909,7 +909,7 @@ const TransactionsPage: React.FC = React.memo(() => {
                     <ChevronDown className="ml-2 h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-48" side="bottom" sideOffset={8}>
                   {table
                     .getAllColumns()
                     .filter((column) => column.getCanHide())

@@ -665,3 +665,253 @@ svg {
               color 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
               border-color 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
+/* NUCLEAR DROPDOWN POSITIONING - Force from bottom always */
+[data-radix-dropdown-menu-content] {
+  /* Completely override Radix positioning */
+  position: fixed !important;
+  z-index: 9999 !important;
+  transform-origin: top center !important;
+  /* Remove Radix's collision detection effects */
+  --radix-dropdown-menu-content-transform-origin: top center !important;
+  /* NO SLIDE ANIMATIONS - appear directly in place */
+  animation: dropdown-appear 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  /* Better shadows */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+              0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Custom animation that doesn't slide from top */
+@keyframes dropdown-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(0) translateX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0) translateX(0);
+  }
+}
+
+/* NUCLEAR OPTION - Override ALL possible slide animations */
+[data-radix-dropdown-menu-content] * {
+  /* Prevent any child elements from sliding */
+  transform: none !important;
+}
+
+/* Override Radix's built-in animations completely */
+[data-radix-dropdown-menu-content][data-state="open"] {
+  /* Force the dropdown to appear exactly where it should be */
+  animation: dropdown-appear 150ms ease-out !important;
+  transform: translateY(0) translateX(0) !important;
+}
+
+/* Prevent any transition delays that might cause the slide effect */
+[data-radix-dropdown-menu-content] {
+  transition-delay: 0s !important;
+  animation-delay: 0s !important;
+}
+
+/* Force bottom positioning by overriding data attributes */
+[data-radix-dropdown-menu-content][data-side="top"],
+[data-radix-dropdown-menu-content][data-side="left"],
+[data-radix-dropdown-menu-content][data-side="right"] {
+  /* Override any side positioning to bottom */
+  transform-origin: top center !important;
+}
+
+[data-radix-dropdown-menu-content][data-side="bottom"] {
+  /* Ensure bottom positioning is correct */
+  transform-origin: top center !important;
+}
+
+/* Dark mode dropdown improvements */
+.dark [data-radix-dropdown-menu-content] {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 
+              0 4px 6px -2px rgba(0, 0, 0, 0.25),
+              0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Dropdown Menu Item hover improvements */
+[data-radix-dropdown-menu-item]:hover {
+  transition: background-color 150ms ease-out, color 150ms ease-out;
+}
+
+/* COMPLETELY DISABLE ALL SLIDE ANIMATIONS - Prevent first-click slide effect */
+[data-radix-dropdown-menu-content] {
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+  position: fixed !important;
+}
+
+/* Override Radix UI animations on first render */
+[data-radix-dropdown-menu-content][data-state="open"] {
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+[data-radix-dropdown-menu-content].slide-in-from-top-2,
+[data-radix-dropdown-menu-content][data-state="open"].slide-in-from-top-2,
+[data-radix-dropdown-menu-content].data-\[side\=bottom\]\:slide-in-from-top-2 {
+  animation: none !important;
+  transform: none !important;
+}
+
+/* Override any Tailwind slide classes */
+.slide-in-from-top-1,
+.slide-in-from-top-2,
+.slide-in-from-top-4,
+.slide-in-from-top-8 {
+  animation: dropdown-appear 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Force immediate positioning without slide */
+[data-radix-dropdown-menu-content][data-state="open"] {
+  animation: dropdown-appear 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transform: none !important;
+}
+
+/* Simple but effective dropdown fixes */
+[data-radix-dropdown-menu-content] {
+  z-index: 9999 !important;
+}
+
+/* Prevent slide-from-top animation on first click */
+[data-radix-dropdown-menu-content][data-side="bottom"] {
+  transform-origin: top center !important;
+}
+
+/* Remove the slide-in-from-top animation that causes the issue */
+[data-radix-dropdown-menu-content].slide-in-from-top-2 {
+  animation: fadeIn 150ms ease-out !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Enhanced Form Input Styling */
+.form-input-enhanced {
+  position: relative;
+  transition: all 0.3s ease-out;
+}
+
+.form-input-enhanced input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  transform: translateY(-1px);
+}
+
+.dark .form-input-enhanced input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.form-input-enhanced input:disabled {
+  background-color: #f9fafb;
+  border-color: #e5e7eb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.dark .form-input-enhanced input:disabled {
+  background-color: rgba(55, 65, 81, 0.5);
+  border-color: #4b5563;
+  color: #9ca3af;
+}
+
+.form-input-enhanced input:not(:disabled):hover {
+  border-color: #9ca3af;
+  transform: translateY(-0.5px);
+}
+
+.dark .form-input-enhanced input:not(:disabled):hover {
+  border-color: #6b7280;
+}
+
+/* Enhanced Card Animations */
+.card-enhanced {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-enhanced:hover {
+  transform: translateY(-2px);
+}
+
+/* Profile Photo Upload Animation */
+@keyframes photoUploadPulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.photo-upload-bg {
+  animation: photoUploadPulse 3s ease-in-out infinite;
+}
+
+/* Gradient Button Animation */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.btn-gradient-animated {
+  background: linear-gradient(-45deg, #3b82f6, #6366f1, #8b5cf6, #06b6d4);
+  background-size: 400% 400%;
+  animation: gradientShift 3s ease infinite;
+}
+
+/* Aggressive accessibility fixes - prevent aria-hidden focus conflicts */
+[data-radix-dropdown-menu-trigger]:focus-visible {
+  outline: 2px solid hsl(var(--ring)) !important;
+  outline-offset: 2px !important;
+}
+
+/* CRITICAL: Override Radix UI aria-hidden on focused elements */
+[aria-hidden="true"]:focus,
+[aria-hidden="true"]:focus-visible,
+[aria-hidden="true"]:focus-within,
+[aria-hidden="true"] *:focus,
+[aria-hidden="true"] *:focus-visible {
+  /* Force visibility for focused elements */
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  outline: 2px solid hsl(var(--ring)) !important;
+  outline-offset: 2px !important;
+}
+
+/* Prevent Radix UI from hiding dropdown parents when children are focused */
+[data-radix-dropdown-menu-content]:focus-within,
+[data-radix-dropdown-menu-trigger]:focus,
+[data-radix-dropdown-menu-trigger][aria-expanded="true"] {
+  /* These elements should never have aria-hidden when active */
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Special case: marked accessible elements */
+[data-focus-accessible="true"] {
+  /* Elements marked by our focus manager */
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}

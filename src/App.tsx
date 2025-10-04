@@ -1,31 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LanguageProvider } from "./context/LanguageContext";
+import { ProfileProvider } from "./context/ProfileContext";
 import Login from "./pages/Login";
 import Layout from "./components/layout/Layout";
-import SimpleRouter from "./utils/SimpleRouter";
+import AppRoutes from "./routes/AppRoutes";
 import AlertNotification from "./components/common/AlertNotification";
+import { ROUTES } from "./constants/routes";
 import "./App.css";
-
-type PageType =
-  | "dashboard"
-  | "users"
-  | "users-page"
-  | "products"
-  | "orders"
-  | "analytics"
-  | "settings"
-  | "profile-settings"
-  | "transactions";
 
 const AppContent: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
-  const [activePage, setActivePage] = useState<PageType>("dashboard");
-
-  const handlePageChange = (pageId: string) => {
-    setActivePage(pageId as PageType);
-  };
 
   if (loading) {
     return (
@@ -40,34 +27,56 @@ const AppContent: React.FC = () => {
     );
   }
 
-  if (!isAuthenticated) {
-    return (
-      <>
-        <Login />
-        <AlertNotification />
-      </>
-    );
-  }
-
   return (
-    <>
-      <Layout activePage={activePage} onPageChange={handlePageChange}>
-        <SimpleRouter activePage={activePage} />
-      </Layout>
-      <AlertNotification />
-    </>
+    <Routes>
+      {/* Public route - Login */}
+      <Route 
+        path={ROUTES.LOGIN} 
+        element={
+          !isAuthenticated ? (
+            <>
+              <Login />
+              <AlertNotification />
+            </>
+          ) : (
+            <Navigate to={ROUTES.DASHBOARD} replace />
+          )
+        } 
+      />
+      
+      {/* Protected routes - wrapped in Layout */}
+      <Route 
+        path="/*" 
+        element={
+          isAuthenticated ? (
+            <>
+              <Layout>
+                <AppRoutes />
+              </Layout>
+              <AlertNotification />
+            </>
+          ) : (
+            <Navigate to={ROUTES.LOGIN} replace />
+          )
+        } 
+      />
+    </Routes>
   );
 };
 
 function App() {
   return (
-    <LanguageProvider>
-      <ThemeProvider>
-        <AuthProvider>
-          <AppContent />
-        </AuthProvider>
-      </ThemeProvider>
-    </LanguageProvider>
+    <Router>
+      <LanguageProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <ProfileProvider>
+              <AppContent />
+            </ProfileProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </LanguageProvider>
+    </Router>
   );
 }
 

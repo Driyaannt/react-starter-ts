@@ -9,14 +9,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+// import { Avatar, AvatarFallback } from "@/components/ui/avatar"; // Now using PhotoUpload
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "@/context/LanguageContext";
+import { useProfile } from "@/context/ProfileContext";
 import CustomButton from "@/components/ui/CustomButton";
 import { useButtonLoading } from "@/hooks/useButtonLoading";
 import LanguageSelector from "@/components/ui/LanguageSelector";
+import PhotoUpload from "@/components/ui/PhotoUpload";
 import {
   User,
   Mail,
@@ -30,12 +32,13 @@ import {
   Bell,
   Palette,
   Globe,
-  Camera,
+  // Camera, // Now handled by PhotoUpload component
 } from "lucide-react";
 
 const ProfileSettings: React.FC = () => {
   const { user, showAlert } = useAuth();
   const { t } = useLanguage();
+  const { profilePhoto, setProfilePhoto } = useProfile();
   const [isEditing, setIsEditing] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -77,8 +80,12 @@ const ProfileSettings: React.FC = () => {
 
   const handleSave = async () => {
     await saveLoading.withLoading(async () => {
-      // Simulate API call
+      // Simulate API call for saving profile data and photo
       await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      // Here you would typically upload the photo to your server
+      // and save the profile data
+      console.log('Saving profile data:', { formData, profilePhoto });
 
       showAlert(
         "success",
@@ -162,32 +169,30 @@ const ProfileSettings: React.FC = () => {
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         {/* Profile Overview */}
-        <Card className="xl:col-span-1 bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-800 dark:to-gray-900/50 border-0 shadow-lg hover:shadow-xl transition-all duration-500 ease-out">
-          <CardHeader className="text-center">
-            <div className="relative mx-auto">
-              <Avatar className="w-24 h-24 mx-auto">
-                <AvatarFallback className="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 text-2xl font-bold">
-                  {user?.name
-                    ?.split(" ")
-                    .map((n) => n[0])
-                    .join("") || user?.username?.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <CustomButton
-                size="sm"
-                variant="secondary"
-                icon={Camera}
-                className="absolute -bottom-2 -right-2 rounded-full w-8 h-8 p-0"
+        <Card className="xl:col-span-1 bg-gradient-to-br from-white via-blue-50/20 to-indigo-50/30 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900/70 border border-blue-100/50 dark:border-gray-700/50 shadow-xl hover:shadow-2xl transition-all duration-500 ease-out backdrop-blur-sm">
+          <CardHeader className="text-center pb-6">
+            <div className="relative mx-auto mb-4">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
+              <PhotoUpload
+                currentPhoto={profilePhoto || undefined}
+                fallbackText={user?.name
+                  ?.split(" ")
+                  .map((n) => n[0])
+                  .join("") || user?.username?.slice(0, 2).toUpperCase() || "U"}
+                size="lg"
+                onPhotoChange={setProfilePhoto}
+                editable={true}
               />
             </div>
-            <CardTitle className="text-xl dark:text-gray-100">
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
               {user?.name || user?.username}
             </CardTitle>
-            <CardDescription className="flex items-center justify-center gap-2">
+            <CardDescription className="flex items-center justify-center gap-2 mt-3">
               <Badge
                 variant="secondary"
-                className="dark:bg-gray-700 dark:text-gray-300"
+                className="bg-gradient-to-r from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700/50 px-3 py-1 font-medium"
               >
+                <Shield className="w-3 h-3 mr-1" />
                 Administrator
               </Badge>
             </CardDescription>
@@ -215,24 +220,30 @@ const ProfileSettings: React.FC = () => {
         </Card>
 
         {/* Profile Details */}
-        <Card className="xl:col-span-2 bg-gradient-to-br from-white to-gray-50/30 dark:from-gray-800 dark:to-gray-900/50 border-0 shadow-lg hover:shadow-xl transition-all duration-500 ease-out">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 dark:text-gray-100">
-              <User className="w-5 h-5" />
-              Personal Information
-            </CardTitle>
-            <CardDescription className="dark:text-gray-400">
-              Update your personal details and contact information
-            </CardDescription>
+        <Card className="xl:col-span-2 bg-gradient-to-br from-white via-gray-50/30 to-blue-50/20 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900/50 shadow-xl hover:shadow-2xl transition-all duration-500 ease-out border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm">
+          <CardHeader className="pb-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 rounded-xl shadow-lg">
+                <User className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div>
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
+                  Personal Information
+                </CardTitle>
+                <CardDescription className="dark:text-gray-400 text-base mt-1">
+                  Update your personal details and contact information
+                </CardDescription>
+              </div>
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-3">
+              <div className="space-y-3 form-input-enhanced">
                 <Label
                   htmlFor="name"
                   className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
                 >
-                  <User className="w-4 h-4" />
+                  <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   Full Name
                 </Label>
                 <Input
@@ -240,11 +251,7 @@ const ProfileSettings: React.FC = () => {
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   disabled={!isEditing}
-                  className={`h-11 px-4 border-2 rounded-lg transition-all duration-300 ${
-                    !isEditing
-                      ? "bg-gray-50 border-gray-200 text-gray-600"
-                      : "bg-white border-gray-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900"
-                  }`}
+                  className="h-12 px-4 border-2 rounded-xl bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 shadow-sm"
                 />
               </div>
               <div className="space-y-3">
