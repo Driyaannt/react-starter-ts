@@ -915,3 +915,74 @@ svg {
   visibility: visible !important;
   pointer-events: auto !important;
 }
+
+/* Enhanced dropdown styling for table column selector */
+.table-column-dropdown {
+  background: white;
+  border: 1px solid rgb(229 231 235);
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  min-width: 240px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.dark .table-column-dropdown {
+  background: rgb(17 24 39);
+  border-color: rgb(75 85 99);
+}
+
+/* Column dropdown item styling */
+.column-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(55 65 81);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.dark .column-dropdown-item {
+  color: rgb(209 213 219);
+}
+
+.column-dropdown-item:hover {
+  background-color: rgb(239 246 255);
+  color: rgb(29 78 216);
+}
+
+.dark .column-dropdown-item:hover {
+  background-color: rgba(37, 99, 235, 0.2);
+  color: rgb(147 197 253);
+}
+
+.column-dropdown-item .icon {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.column-dropdown-item .checkbox {
+  width: 16px;
+  height: 16px;
+}
+
+/* Smooth animations for dropdown */
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-content {
+  animation: dropdown-in 0.15s ease-out;
+}

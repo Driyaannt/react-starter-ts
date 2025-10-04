@@ -888,45 +888,93 @@ const TransactionsPage: React.FC = React.memo(() => {
                         .getColumn("description")
                         ?.setFilterValue(event.target.value)
                     }
-                    className="w-80 pl-4 pr-4 bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400"
+                    className="w-80 pl-4 pr-4 bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 shadow-sm text-sm placeholder:text-gray-500 dark:placeholder:text-gray-400"
                   />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <span className="text-xs text-gray-400">🔍</span>
+                  </div>
                 </div>
                 <Button
                   variant="outline"
+                  size="sm"
                   onClick={handleClearFilters}
-                  className="bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  className="bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium shadow-sm transition-all duration-200 hover:shadow-md"
                 >
-                  {t.transactions.filters.clearAll}
+                  <span className="text-sm">{t.transactions.filters.clearAll}</span>
                 </Button>
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="outline"
-                    className="bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    size="sm"
+                    className="bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium shadow-sm transition-all duration-200 hover:shadow-md"
                   >
-                    {t.transactions.filters.columns}{" "}
-                    <ChevronDown className="ml-2 h-4 w-4" />
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">{t.transactions.filters.columns}</span>
+                      <ChevronDown className="h-4 w-4 text-gray-500" />
+                    </div>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48" side="bottom" sideOffset={8}>
-                  {table
-                    .getAllColumns()
-                    .filter((column) => column.getCanHide())
-                    .map((column) => {
-                      return (
-                        <DropdownMenuCheckboxItem
-                          key={column.id}
-                          className="capitalize"
-                          checked={column.getIsVisible()}
-                          onCheckedChange={(value) =>
-                            column.toggleVisibility(!!value)
-                          }
-                        >
-                          {column.id}
-                        </DropdownMenuCheckboxItem>
-                      );
-                    })}
+                <DropdownMenuContent 
+                  align="end" 
+                  className="table-column-dropdown dropdown-content"
+                  side="bottom" 
+                  sideOffset={12}
+                >
+                  <DropdownMenuLabel className="px-4 py-3 text-sm font-bold text-gray-900 dark:text-gray-100 border-b border-gray-100 dark:border-gray-700 mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">📊</span>
+                      <span>{t.transactions.filters.columns}</span>
+                    </div>
+                  </DropdownMenuLabel>
+                  <div className="max-h-80 overflow-y-auto">
+                    {table
+                      .getAllColumns()
+                      .filter((column) => column.getCanHide())
+                      .map((column) => {
+                        // Define user-friendly column labels with professional icons
+                        const getColumnLabel = (columnId: string) => {
+                          const labels: Record<string, { label: string; icon: string }> = {
+                            transactionId: { label: t.transactions.transactionId, icon: "🆔" },
+                            description: { label: t.transactions.description, icon: "📝" },
+                            amount: { label: t.transactions.amount, icon: "💰" },
+                            type: { label: t.transactions.type, icon: "🏷️" },
+                            status: { label: "Status", icon: "⚡" },
+                            date: { label: t.transactions.date, icon: "📅" },
+                            customer: { label: t.transactions.customer, icon: "👤" },
+                            method: { label: t.transactions.method, icon: "💳" },
+                            category: { label: "Category", icon: "📂" }
+                          };
+                          return labels[columnId] || { label: columnId, icon: "📄" };
+                        };
+
+                        const columnInfo = getColumnLabel(column.id);
+
+                        return (
+                          <DropdownMenuCheckboxItem
+                            key={column.id}
+                            className="column-dropdown-item"
+                            checked={column.getIsVisible()}
+                            onCheckedChange={(value) =>
+                              column.toggleVisibility(!!value)
+                            }
+                          >
+                            <span className="icon">{columnInfo.icon}</span>
+                            <span className="flex-1 text-left">
+                              {columnInfo.label}
+                            </span>
+                          </DropdownMenuCheckboxItem>
+                        );
+                      })}
+                  </div>
+                  
+                  {/* Footer with toggle all option */}
+                  <div className="border-t border-gray-100 dark:border-gray-700 pt-2 mt-2">
+                    <div className="px-3 py-2 text-xs text-gray-500 dark:text-gray-400 font-medium">
+                      💡 Tip: {table.getAllColumns().filter(c => c.getCanHide() && c.getIsVisible()).length} of {table.getAllColumns().filter(c => c.getCanHide()).length} columns visible
+                    </div>
+                  </div>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
