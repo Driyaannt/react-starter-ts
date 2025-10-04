@@ -986,3 +986,63 @@ svg {
 .dropdown-content {
   animation: dropdown-in 0.15s ease-out;
 }
+
+/* Table Actions Dropdown Improvements */
+.table-actions-dropdown {
+  min-width: 180px;
+  background: white;
+  border: 1px solid rgb(229 231 235);
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  z-index: 50;
+}
+
+.dark .table-actions-dropdown {
+  background: rgb(31 41 55);
+  border-color: rgb(75 85 99);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+.table-actions-item {
+  padding: 8px 12px;
+  font-size: 14px;
+  color: rgb(55 65 81);
+  transition: all 0.15s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dark .table-actions-item {
+  color: rgb(209 213 219);
+}
+
+.table-actions-item:hover {
+  background-color: rgb(249 250 251);
+  color: rgb(17 24 39);
+}
+
+.dark .table-actions-item:hover {
+  background-color: rgb(55 65 81);
+  color: rgb(243 244 246);
+}
+
+.table-actions-item.destructive {
+  color: rgb(239 68 68);
+}
+
+.table-actions-item.destructive:hover {
+  background-color: rgb(254 242 242);
+  color: rgb(220 38 38);
+}
+
+.dark .table-actions-item.destructive {
+  color: rgb(248 113 113);
+}
+
+.dark .table-actions-item.destructive:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: rgb(248 113 113);
+}

@@ -51,6 +51,7 @@ import {
   Eye,
   Edit,
   Trash2,
+  Copy,
   TrendingUp,
   TrendingDown,
   ArrowUpDown,
@@ -111,14 +112,16 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="p-0 h-auto font-medium"
+        className="p-0 h-auto font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
       >
         {t.transactions.transactionId}
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="font-mono text-sm">{row.getValue("transactionId")}</div>
+      <div className="font-mono text-sm bg-gray-50 dark:bg-gray-800 px-2 py-1 rounded border text-gray-700 dark:text-gray-300">
+        {row.getValue("transactionId")}
+      </div>
     ),
   },
   {
@@ -127,14 +130,14 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="p-0 h-auto font-medium"
+        className="p-0 h-auto font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
       >
         {t.transactions.description}
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="max-w-[200px] truncate">
+      <div className="max-w-[200px] truncate text-gray-900 dark:text-gray-100 font-medium">
         {row.getValue("description")}
       </div>
     ),
@@ -160,11 +163,13 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
       }).format(amount);
 
       return (
-        <div className="text-right font-medium">
+        <div className="text-right">
           <span
-            className={
-              transaction.type === "income" ? "text-green-600" : "text-red-600"
-            }
+            className={`font-semibold px-2 py-1 rounded-md ${
+              transaction.type === "income" 
+              ? "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/20" 
+              : "text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-900/20"
+            }`}
           >
             {formatted}
           </span>
@@ -280,7 +285,7 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="p-0 h-auto font-medium"
+        className="p-0 h-auto font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
       >
         {t.transactions.date}
         <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -289,7 +294,13 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
     cell: ({ row }) => {
       const date = new Date(row.getValue("date"));
       return (
-        <div className="whitespace-nowrap">{date.toLocaleDateString()}</div>
+        <div className="whitespace-nowrap text-gray-900 dark:text-gray-100 font-medium">
+          {date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+          })}
+        </div>
       );
     },
   },
@@ -302,33 +313,44 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:scale-105"
+            >
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="h-4 w-4 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" side="bottom" sideOffset={8}>
-            <DropdownMenuLabel>
+          <DropdownMenuContent 
+            align="end" 
+            side="bottom" 
+            sideOffset={8}
+            className="w-[180px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg"
+          >
+            <DropdownMenuLabel className="px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 border-b border-gray-100 dark:border-gray-700">
               {t.transactions.actions.title}
             </DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() =>
                 navigator.clipboard.writeText(transaction.transactionId)
               }
+              className="px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer flex items-center gap-2"
             >
+              <Copy className="h-4 w-4" />
               {t.transactions.actions.copyId}
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Eye className="mr-2 h-4 w-4" />
+            <DropdownMenuSeparator className="my-1 border-gray-100 dark:border-gray-700" />
+            <DropdownMenuItem className="px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer flex items-center gap-2">
+              <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400" />
               {t.transactions.actions.view}
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Edit className="mr-2 h-4 w-4" />
+            <DropdownMenuItem className="px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer flex items-center gap-2">
+              <Edit className="h-4 w-4 text-green-600 dark:text-green-400" />
               {t.transactions.actions.edit}
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">
-              <Trash2 className="mr-2 h-4 w-4" />
+            <DropdownMenuItem className="px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer flex items-center gap-2">
+              <Trash2 className="h-4 w-4" />
               {t.transactions.actions.delete}
             </DropdownMenuItem>
           </DropdownMenuContent>
