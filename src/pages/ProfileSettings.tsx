@@ -1,91 +1,125 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { useAuth } from '../context/AuthContext';
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
+import React, { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { useAuth } from "../context/AuthContext";
+import { useLanguage } from "@/context/LanguageContext";
+import CustomButton from "@/components/ui/CustomButton";
+import { useButtonLoading } from "@/hooks/useButtonLoading";
+import LanguageSelector from "@/components/ui/LanguageSelector";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
   Calendar,
   Save,
-
   Eye,
   EyeOff,
   Shield,
   Bell,
   Palette,
   Globe,
-  Camera
-} from 'lucide-react';
+  Camera,
+} from "lucide-react";
 
 const ProfileSettings: React.FC = () => {
   const { user, showAlert } = useAuth();
+  const { t } = useLanguage();
   const [isEditing, setIsEditing] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  // Button loading states
+  const saveLoading = useButtonLoading();
+  const changePasswordLoading = useButtonLoading();
+
   // Form states
   const [formData, setFormData] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    username: user?.username || '',
-    phone: '+62 812-3456-7890',
-    location: 'Jakarta, Indonesia',
-    bio: 'Administrator of the system',
-    website: 'https://mywebsite.com',
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+    name: user?.name || "",
+    email: user?.email || "",
+    username: user?.username || "",
+    phone: "+62 812-3456-7890",
+    location: "Jakarta, Indonesia",
+    bio: "Administrator of the system",
+    website: "https://mywebsite.com",
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
 
   const [preferences, setPreferences] = useState({
     emailNotifications: true,
     pushNotifications: true,
     marketingEmails: false,
-    theme: 'light',
-    language: 'en'
+    theme: "light",
+    language: "en",
   });
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handlePreferenceChange = (field: string, value: boolean | string) => {
-    setPreferences(prev => ({ ...prev, [field]: value }));
+    setPreferences((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = () => {
-    // Here you would typically make an API call to save the data
-    showAlert('success', 'Profile Updated', 'Your profile has been successfully updated!');
-    setIsEditing(false);
+  const handleSave = async () => {
+    await saveLoading.withLoading(async () => {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      showAlert(
+        "success",
+        t.profile.profileUpdated,
+        t.profile.profileUpdatedDesc
+      );
+      setIsEditing(false);
+    });
   };
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = async () => {
     if (formData.newPassword !== formData.confirmPassword) {
-      showAlert('error', 'Password Mismatch', 'New password and confirm password do not match!');
-      return;
-    }
-    
-    if (formData.newPassword.length < 6) {
-      showAlert('error', 'Password Too Short', 'Password must be at least 6 characters long!');
+      showAlert(
+        "error",
+        t.profile.passwordMismatch,
+        t.profile.passwordMismatch
+      );
       return;
     }
 
-    // Here you would typically make an API call to change password
-    showAlert('success', 'Password Changed', 'Your password has been successfully changed!');
-    setFormData(prev => ({
-      ...prev,
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: ''
-    }));
+    if (formData.newPassword.length < 6) {
+      showAlert("error", t.alerts.error, t.profile.passwordTooShort);
+      return;
+    }
+
+    await changePasswordLoading.withLoading(async () => {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      showAlert(
+        "success",
+        t.profile.passwordChanged,
+        t.profile.passwordChangedDesc
+      );
+      setFormData((prev) => ({
+        ...prev,
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      }));
+    });
   };
 
   return (
@@ -93,74 +127,86 @@ const ProfileSettings: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-            Profile Settings
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
+            {t.profile.title}
           </h1>
-          <p className="text-gray-600 mt-3 text-lg">
-            Manage your account settings and preferences
+          <p className="text-gray-600 dark:text-gray-400 mt-3 text-lg">
+            {t.profile.subtitle}
           </p>
         </div>
         <div className="flex gap-3">
           {isEditing ? (
             <>
-              <Button 
-                variant="outline" 
+              <CustomButton
+                variant="outline"
                 onClick={() => setIsEditing(false)}
               >
                 Cancel
-              </Button>
-              <Button onClick={handleSave}>
-                <Save className="w-4 h-4 mr-2" />
+              </CustomButton>
+              <CustomButton
+                variant="primary"
+                icon={Save}
+                onClick={handleSave}
+                loading={saveLoading.loading}
+              >
                 Save Changes
-              </Button>
+              </CustomButton>
             </>
           ) : (
-            <Button onClick={() => setIsEditing(true)}>
+            <CustomButton variant="primary" onClick={() => setIsEditing(true)}>
               Edit Profile
-            </Button>
+            </CustomButton>
           )}
         </div>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         {/* Profile Overview */}
-        <Card className="xl:col-span-1 bg-gradient-to-br from-white to-blue-50/30 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+        <Card className="xl:col-span-1 bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-800 dark:to-gray-900/50 border-0 shadow-lg hover:shadow-xl transition-all duration-500 ease-out">
           <CardHeader className="text-center">
             <div className="relative mx-auto">
               <Avatar className="w-24 h-24 mx-auto">
-                <AvatarFallback className="bg-blue-100 text-blue-700 text-2xl font-bold">
-                  {user?.name?.split(' ').map(n => n[0]).join('') || 
-                   user?.username?.slice(0, 2).toUpperCase()}
+                <AvatarFallback className="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 text-2xl font-bold">
+                  {user?.name
+                    ?.split(" ")
+                    .map((n) => n[0])
+                    .join("") || user?.username?.slice(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <Button 
-                size="sm" 
-                className="absolute -bottom-2 -right-2 rounded-full w-8 h-8 p-0"
+              <CustomButton
+                size="sm"
                 variant="secondary"
-              >
-                <Camera className="w-4 h-4" />
-              </Button>
+                icon={Camera}
+                className="absolute -bottom-2 -right-2 rounded-full w-8 h-8 p-0"
+              />
             </div>
-            <CardTitle className="text-xl">{user?.name || user?.username}</CardTitle>
+            <CardTitle className="text-xl dark:text-gray-100">
+              {user?.name || user?.username}
+            </CardTitle>
             <CardDescription className="flex items-center justify-center gap-2">
-              <Badge variant="secondary">Administrator</Badge>
+              <Badge
+                variant="secondary"
+                className="dark:bg-gray-700 dark:text-gray-300"
+              >
+                Administrator
+              </Badge>
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-3">
-              <div className="flex items-center gap-3 text-sm text-gray-600">
+              <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
                 <Mail className="w-4 h-4" />
                 <span>{user?.email}</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-gray-600">
+              <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
                 <Phone className="w-4 h-4" />
                 <span>{formData.phone}</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-gray-600">
+              <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
                 <MapPin className="w-4 h-4" />
                 <span>{formData.location}</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-gray-600">
+              <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
                 <Calendar className="w-4 h-4" />
                 <span>Joined January 2024</span>
               </div>
@@ -169,100 +215,104 @@ const ProfileSettings: React.FC = () => {
         </Card>
 
         {/* Profile Details */}
-        <Card className="xl:col-span-2 bg-gradient-to-br from-white to-gray-50/30 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+        <Card className="xl:col-span-2 bg-gradient-to-br from-white to-gray-50/30 dark:from-gray-800 dark:to-gray-900/50 border-0 shadow-lg hover:shadow-xl transition-all duration-500 ease-out">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 dark:text-gray-100">
               <User className="w-5 h-5" />
               Personal Information
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="dark:text-gray-400">
               Update your personal details and contact information
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="name"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
+                >
+                  <User className="w-4 h-4" />
+                  Full Name
+                </Label>
                 <Input
                   id="name"
                   value={formData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
                   disabled={!isEditing}
-                  className={!isEditing ? 'bg-gray-50' : ''}
+                  className={`h-11 px-4 border-2 rounded-lg transition-all duration-300 ${
+                    !isEditing
+                      ? "bg-gray-50 border-gray-200 text-gray-600"
+                      : "bg-white border-gray-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-gray-900"
+                  }`}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="username"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
+                >
+                  <User className="w-4 h-4" />
+                  Username
+                </Label>
                 <Input
                   id="username"
                   value={formData.username}
-                  onChange={(e) => handleInputChange('username', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("username", e.target.value)
+                  }
                   disabled={!isEditing}
-                  className={!isEditing ? 'bg-gray-50' : ''}
+                  className={`h-11 px-4 border-2 rounded-lg transition-all duration-300 ${
+                    !isEditing
+                      ? "bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+                      : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/20 text-gray-900 dark:text-gray-100"
+                  }`}
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
+                >
+                  <Mail className="w-4 h-4" />
+                  Email Address
+                </Label>
                 <Input
                   id="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
                   disabled={!isEditing}
-                  className={!isEditing ? 'bg-gray-50' : ''}
+                  className={`h-11 px-4 border-2 rounded-lg transition-all duration-300 ${
+                    !isEditing
+                      ? "bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+                      : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/20 text-gray-900 dark:text-gray-100"
+                  }`}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="phone"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
+                >
+                  <Phone className="w-4 h-4" />
+                  Phone Number
+                </Label>
                 <Input
                   id="phone"
                   value={formData.phone}
-                  onChange={(e) => handleInputChange('phone', e.target.value)}
+                  onChange={(e) => handleInputChange("phone", e.target.value)}
                   disabled={!isEditing}
-                  className={!isEditing ? 'bg-gray-50' : ''}
+                  className={`h-11 px-4 border-2 rounded-lg transition-all duration-300 ${
+                    !isEditing
+                      ? "bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+                      : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/20 text-gray-900 dark:text-gray-100"
+                  }`}
                 />
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
-                <Input
-                  id="location"
-                  value={formData.location}
-                  onChange={(e) => handleInputChange('location', e.target.value)}
-                  disabled={!isEditing}
-                  className={!isEditing ? 'bg-gray-50' : ''}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="website">Website</Label>
-                <Input
-                  id="website"
-                  value={formData.website}
-                  onChange={(e) => handleInputChange('website', e.target.value)}
-                  disabled={!isEditing}
-                  className={!isEditing ? 'bg-gray-50' : ''}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="bio">Bio</Label>
-              <textarea
-                id="bio"
-                className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${
-                  !isEditing ? 'bg-gray-50' : ''
-                }`}
-                rows={3}
-                value={formData.bio}
-                onChange={(e) => handleInputChange('bio', e.target.value)}
-                disabled={!isEditing}
-                placeholder="Tell us about yourself..."
-              />
             </div>
           </CardContent>
         </Card>
@@ -270,161 +320,210 @@ const ProfileSettings: React.FC = () => {
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         {/* Password Settings */}
-        <Card className="bg-gradient-to-br from-white to-red-50/30 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+        <Card className="bg-gradient-to-br from-white to-red-50/30 dark:from-gray-800 dark:to-red-900/10 border-0 shadow-lg hover:shadow-xl transition-all duration-500 ease-out">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 dark:text-gray-100">
               <Shield className="w-5 h-5" />
               Password Settings
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="dark:text-gray-400">
               Change your password to keep your account secure
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="currentPassword">Current Password</Label>
+            <div className="space-y-3">
+              <Label
+                htmlFor="currentPassword"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
+              >
+                <Shield className="w-4 h-4" />
+                Current Password
+              </Label>
               <div className="relative">
                 <Input
                   id="currentPassword"
-                  type={showCurrentPassword ? 'text' : 'password'}
+                  type={showCurrentPassword ? "text" : "password"}
                   value={formData.currentPassword}
-                  onChange={(e) => handleInputChange('currentPassword', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("currentPassword", e.target.value)
+                  }
                   placeholder="Enter current password"
+                  className="h-11 px-4 pr-12 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/20 transition-all duration-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                 />
-                <Button
-                  type="button"
+                <CustomButton
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  icon={showCurrentPassword ? EyeOff : Eye}
+                  className="absolute right-1 top-1 h-9 w-9 rounded-lg"
                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                >
-                  {showCurrentPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </Button>
+                />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="newPassword">New Password</Label>
+            <div className="space-y-3">
+              <Label
+                htmlFor="newPassword"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
+              >
+                <Shield className="w-4 h-4" />
+                New Password
+              </Label>
               <div className="relative">
                 <Input
                   id="newPassword"
-                  type={showNewPassword ? 'text' : 'password'}
+                  type={showNewPassword ? "text" : "password"}
                   value={formData.newPassword}
-                  onChange={(e) => handleInputChange('newPassword', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("newPassword", e.target.value)
+                  }
                   placeholder="Enter new password"
+                  className="h-11 px-4 pr-12 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/20 transition-all duration-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                 />
-                <Button
-                  type="button"
+                <CustomButton
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  icon={showNewPassword ? EyeOff : Eye}
+                  className="absolute right-1 top-1 h-9 w-9 rounded-lg"
                   onClick={() => setShowNewPassword(!showNewPassword)}
-                >
-                  {showNewPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </Button>
+                />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm New Password</Label>
+            <div className="space-y-3">
+              <Label
+                htmlFor="confirmPassword"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2"
+              >
+                <Shield className="w-4 h-4" />
+                Confirm New Password
+              </Label>
               <div className="relative">
                 <Input
                   id="confirmPassword"
-                  type={showConfirmPassword ? 'text' : 'password'}
+                  type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
-                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("confirmPassword", e.target.value)
+                  }
                   placeholder="Confirm new password"
+                  className="h-11 px-4 pr-12 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/20 transition-all duration-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                 />
-                <Button
-                  type="button"
+                <CustomButton
                   variant="ghost"
                   size="sm"
-                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  icon={showConfirmPassword ? EyeOff : Eye}
+                  className="absolute right-1 top-1 h-9 w-9 rounded-lg"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </Button>
+                />
               </div>
             </div>
 
-            <Button 
+            <CustomButton
+              variant="danger"
+              icon={Shield}
+              fullWidth
               onClick={handlePasswordChange}
-              className="w-full"
-              disabled={!formData.currentPassword || !formData.newPassword || !formData.confirmPassword}
+              loading={changePasswordLoading.loading}
+              disabled={
+                !formData.currentPassword ||
+                !formData.newPassword ||
+                !formData.confirmPassword
+              }
             >
               Change Password
-            </Button>
+            </CustomButton>
           </CardContent>
         </Card>
 
         {/* Preferences */}
-        <Card className="bg-gradient-to-br from-white to-purple-50/30 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+        <Card className="bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-800 dark:to-purple-900/10 border-0 shadow-lg hover:shadow-xl transition-all duration-500 ease-out">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 dark:text-gray-100">
               <Palette className="w-5 h-5" />
               Preferences
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="dark:text-gray-400">
               Customize your application experience
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Notifications */}
             <div className="space-y-4">
-              <h4 className="font-medium flex items-center gap-2">
+              <h4 className="font-medium flex items-center gap-2 dark:text-gray-100">
                 <Bell className="w-4 h-4" />
                 Notifications
               </h4>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium">Email Notifications</p>
-                    <p className="text-xs text-gray-500">Receive notifications via email</p>
+                    <p className="text-sm font-medium dark:text-gray-100">
+                      Email Notifications
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Receive notifications via email
+                    </p>
                   </div>
                   <Button
-                    variant={preferences.emailNotifications ? "default" : "outline"}
+                    variant={
+                      preferences.emailNotifications ? "default" : "outline"
+                    }
                     size="sm"
-                    onClick={() => handlePreferenceChange('emailNotifications', !preferences.emailNotifications)}
+                    onClick={() =>
+                      handlePreferenceChange(
+                        "emailNotifications",
+                        !preferences.emailNotifications
+                      )
+                    }
                   >
-                    {preferences.emailNotifications ? 'On' : 'Off'}
+                    {preferences.emailNotifications ? "On" : "Off"}
                   </Button>
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium">Push Notifications</p>
-                    <p className="text-xs text-gray-500">Receive push notifications</p>
+                    <p className="text-sm font-medium dark:text-gray-100">
+                      Push Notifications
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Receive push notifications
+                    </p>
                   </div>
                   <Button
-                    variant={preferences.pushNotifications ? "default" : "outline"}
+                    variant={
+                      preferences.pushNotifications ? "default" : "outline"
+                    }
                     size="sm"
-                    onClick={() => handlePreferenceChange('pushNotifications', !preferences.pushNotifications)}
+                    onClick={() =>
+                      handlePreferenceChange(
+                        "pushNotifications",
+                        !preferences.pushNotifications
+                      )
+                    }
                   >
-                    {preferences.pushNotifications ? 'On' : 'Off'}
+                    {preferences.pushNotifications ? "On" : "Off"}
                   </Button>
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium">Marketing Emails</p>
-                    <p className="text-xs text-gray-500">Receive promotional content</p>
+                    <p className="text-sm font-medium dark:text-gray-100">
+                      Marketing Emails
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      Receive promotional content
+                    </p>
                   </div>
                   <Button
-                    variant={preferences.marketingEmails ? "default" : "outline"}
+                    variant={
+                      preferences.marketingEmails ? "default" : "outline"
+                    }
                     size="sm"
-                    onClick={() => handlePreferenceChange('marketingEmails', !preferences.marketingEmails)}
+                    onClick={() =>
+                      handlePreferenceChange(
+                        "marketingEmails",
+                        !preferences.marketingEmails
+                      )
+                    }
                   >
-                    {preferences.marketingEmails ? 'On' : 'Off'}
+                    {preferences.marketingEmails ? "On" : "Off"}
                   </Button>
                 </div>
               </div>
@@ -434,42 +533,38 @@ const ProfileSettings: React.FC = () => {
 
             {/* Appearance */}
             <div className="space-y-4">
-              <h4 className="font-medium flex items-center gap-2">
+              <h4 className="font-medium flex items-center gap-2 dark:text-gray-100">
                 <Globe className="w-4 h-4" />
-                Appearance & Language
+                {t.profile.appearance}
               </h4>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium">Theme</p>
-                    <p className="text-xs text-gray-500">Choose your preferred theme</p>
+                    <p className="text-sm font-medium dark:text-gray-100">
+                      {t.profile.theme}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {t.profile.themeDesc}
+                    </p>
                   </div>
                   <select
-                    className="px-3 py-1 border border-gray-300 rounded-md text-sm"
+                    className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                     value={preferences.theme}
-                    onChange={(e) => handlePreferenceChange('theme', e.target.value)}
+                    onChange={(e) =>
+                      handlePreferenceChange("theme", e.target.value)
+                    }
                   >
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                    <option value="auto">Auto</option>
+                    <option value="light">{t.theme.light}</option>
+                    <option value="dark">{t.theme.dark}</option>
+                    <option value="auto">{t.theme.auto}</option>
                   </select>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium">Language</p>
-                    <p className="text-xs text-gray-500">Select your language</p>
-                  </div>
-                  <select
-                    className="px-3 py-1 border border-gray-300 rounded-md text-sm"
-                    value={preferences.language}
-                    onChange={(e) => handlePreferenceChange('language', e.target.value)}
-                  >
-                    <option value="en">English</option>
-                    <option value="id">Indonesian</option>
-                    <option value="es">Spanish</option>
-                    <option value="fr">French</option>
-                  </select>
-                </div>
+
+                {/* Language Selector Component */}
+                <LanguageSelector
+                  variant="settings"
+                  className="border-t border-gray-200 dark:border-gray-700 pt-4"
+                />
               </div>
             </div>
           </CardContent>

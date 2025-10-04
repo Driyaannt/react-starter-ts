@@ -22,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-500 ease-out">
       <Header onPageChange={onPageChange} />
       <div className="flex">
         <Sidebar
@@ -31,11 +31,13 @@ const Layout: React.FC<LayoutProps> = ({
           onToggle={handleSidebarToggle}
         />
         <main
-          className={`flex-1 pt-16 transition-all duration-300 ${
+          className={`flex-1 pt-16 transition-all duration-300 show-scrollbar overflow-y-auto max-h-screen ${
             sidebarCollapsed ? "ml-16" : "ml-64"
           }`}
         >
-          <div className="p-6 min-h-[calc(100vh-4rem)] w-full">{children}</div>
+          <div className="p-6 min-h-[calc(100vh-4rem)] w-full transition-colors duration-400 ease-out">
+            {children}
+          </div>
           <Footer />
         </main>
       </div>

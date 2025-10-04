@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useLanguage } from "../../context/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -28,6 +29,8 @@ import {
   HelpCircle,
   ChevronDown,
 } from "lucide-react";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import LanguageSelector from "@/components/ui/LanguageSelector";
 
 interface HeaderProps {
   onPageChange?: (pageId: string) => void;
@@ -35,6 +38,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
@@ -56,12 +60,21 @@ const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-gray-800 dark:to-gray-900 text-white shadow-lg">
       <div className="flex justify-between items-center px-6 py-4 max-w-full">
         <div className="flex items-center">
           <h1 className="text-xl font-bold">MyApp</h1>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
+          {/* Language Selector */}
+          <LanguageSelector variant="header" />
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
+          {/* Separator */}
+          <div className="h-6 w-px bg-white/20 dark:bg-gray-600/40"></div>
+
           <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
             <DropdownMenuTrigger asChild>
               <Button
@@ -69,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
                 className="flex items-center gap-3 hover:bg-white/10 transition-colors duration-200"
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-white text-blue-600 text-sm font-medium">
+                  <AvatarFallback className="bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 text-sm font-medium">
                     {user?.name
                       ?.split(" ")
                       .map((n) => n[0])
@@ -78,15 +91,17 @@ const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
                 </Avatar>
                 <div className="flex flex-col items-start">
                   <span className="text-sm font-medium text-white">
-                    Welcome, {user?.name || user?.username}
+                    {t.common.welcome}, {user?.name || user?.username}
                   </span>
-                  <span className="text-xs text-blue-100">Administrator</span>
+                  <span className="text-xs text-blue-100">
+                    {t.common.administrator}
+                  </span>
                 </div>
                 <ChevronDown className="h-4 w-4 text-blue-100" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-64 mr-4 bg-white border border-gray-200 shadow-xl rounded-lg backdrop-blur-sm z-[60]"
+              className="w-64 mr-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-lg backdrop-blur-sm z-[60]"
               align="end"
               sideOffset={8}
             >
@@ -115,22 +130,22 @@ const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
                 onClick={() => onPageChange?.("profile-settings")}
               >
                 <User className="h-4 w-4" />
-                <span>Profile Settings</span>
+                <span>{t.nav.profileSettings}</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                 <Settings className="h-4 w-4" />
-                <span>Account Settings</span>
+                <span>{t.common.accountSettings}</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                 <Bell className="h-4 w-4" />
-                <span>Notifications</span>
+                <span>{t.common.notifications}</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                 <HelpCircle className="h-4 w-4" />
-                <span>Help & Support</span>
+                <span>{t.common.helpSupport}</span>
               </DropdownMenuItem>
 
               <DropdownMenuSeparator />
@@ -141,7 +156,7 @@ const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
                 onSelect={(e) => e.preventDefault()}
               >
                 <LogOut className="h-4 w-4" />
-                <span>Logout</span>
+                <span>{t.common.logout}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -150,26 +165,25 @@ const Header: React.FC<HeaderProps> = ({ onPageChange }) => {
 
       {/* Logout Confirmation Dialog - Outside of dropdown */}
       <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
-        <AlertDialogContent className="bg-white">
+        <AlertDialogContent className="bg-white dark:bg-gray-800">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-gray-900">
-              Konfirmasi Logout
+              {t.alerts.logoutTitle}
             </AlertDialogTitle>
             <AlertDialogDescription className="text-gray-600">
-              Apakah Anda yakin ingin keluar dari sistem? Anda akan diarahkan ke
-              halaman login.
+              {t.alerts.logoutMessage}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel className="text-gray-600">
-              Batal
+              {t.common.cancel}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleLogout}
               disabled={isLoggingOut}
               className="bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoggingOut ? "Logging out..." : "Ya, Logout"}
+              {isLoggingOut ? t.common.loading : t.alerts.logoutConfirm}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

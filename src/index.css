@@ -187,3 +187,481 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Hide scrollbar globally except for specific elements */
+html, body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Show scrollbar for page content and footer */
+.show-scrollbar {
+  -ms-overflow-style: auto;  /* IE and Edge */
+  scrollbar-width: thin;  /* Firefox */
+}
+
+.show-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+}
+
+.show-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.show-scrollbar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.show-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* For specific containers that need no scrollbar */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Simple and reliable tooltip styles */
+.sidebar-tooltip {
+  position: fixed;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-tooltip.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar-tooltip::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-right-color: rgba(0, 0, 0, 0.9);
+}
+
+.sidebar-tooltip.active {
+  background: rgba(59, 130, 246, 0.95);
+}
+
+.sidebar-tooltip.active::before {
+  border-right-color: rgba(59, 130, 246, 0.95);
+}
+
+/* Enhanced Button Styles */
+.btn-primary {
+  @apply h-10 px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] border-0;
+}
+
+.btn-outline {
+  @apply h-10 px-4 py-2 bg-white border-2 border-gray-200 text-gray-700 font-medium rounded-lg hover:border-gray-300 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 shadow-sm hover:shadow-md;
+}
+
+.btn-outline-primary {
+  @apply h-10 px-4 py-2 bg-blue-50 border-2 border-blue-200 text-blue-700 font-medium rounded-lg hover:border-blue-300 hover:bg-blue-100 hover:text-blue-800 transition-all duration-200 shadow-sm hover:shadow-md;
+}
+
+.btn-success {
+  @apply h-10 px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 border-0;
+}
+
+.btn-danger {
+  @apply h-10 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 border-0;
+}
+
+.btn-warning {
+  @apply h-10 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 border-0;
+}
+
+/* Icon spacing in buttons */
+.btn-icon-left {
+  @apply flex items-center gap-2;
+}
+
+.btn-icon-right {
+  @apply flex items-center gap-2 flex-row-reverse;
+}
+
+/* Button sizes */
+.btn-sm {
+  @apply h-8 px-3 py-1 text-sm;
+}
+
+.btn-lg {
+  @apply h-12 px-8 py-3 text-lg;
+}
+
+/* Button states */
+.btn-loading {
+  @apply opacity-75 cursor-not-allowed pointer-events-none;
+}
+
+.btn-disabled {
+  @apply opacity-50 cursor-not-allowed pointer-events-none;
+}
+
+/* Enhanced Dark Mode Styles */
+.dark {
+  color-scheme: dark;
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+.dark body {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+/* Dark mode utility overrides */
+.dark .bg-white { background-color: #1f2937 !important; }
+.dark .bg-gray-50 { background-color: #111827 !important; }
+.dark .bg-gray-100 { background-color: #374151 !important; }
+.dark .bg-gray-200 { background-color: #4b5563 !important; }
+
+.dark .text-gray-900 { color: #f9fafb !important; }
+.dark .text-gray-800 { color: #e5e7eb !important; }
+.dark .text-gray-700 { color: #d1d5db !important; }
+.dark .text-gray-600 { color: #9ca3af !important; }
+.dark .text-gray-500 { color: #9ca3af !important; }
+
+.dark .border-gray-200 { border-color: #374151 !important; }
+.dark .border-gray-300 { border-color: #4b5563 !important; }
+.dark .border-gray-100 { border-color: #1f2937 !important; }
+
+/* Card and background adaptations */
+.dark .from-white { 
+  background: linear-gradient(to right, #1f2937, var(--tw-gradient-to, rgba(31, 41, 55, 0))) !important; 
+}
+.dark .to-white { 
+  --tw-gradient-to: #1f2937 !important; 
+}
+.dark .via-gray-50 { 
+  --tw-gradient-via: #1f2937 !important; 
+}
+
+/* Button background adaptations */
+.dark .bg-blue-50 { background-color: rgba(30, 58, 138, 0.2) !important; }
+.dark .bg-green-50 { background-color: rgba(20, 83, 45, 0.2) !important; }
+.dark .bg-red-50 { background-color: rgba(127, 29, 29, 0.2) !important; }
+.dark .bg-yellow-50 { background-color: rgba(133, 77, 14, 0.2) !important; }
+
+/* Hover state adaptations */
+.dark .hover\:bg-gray-50:hover { background-color: #374151 !important; }
+.dark .hover\:bg-gray-100:hover { background-color: #4b5563 !important; }
+.dark .hover\:bg-blue-50:hover { background-color: rgba(30, 58, 138, 0.3) !important; }
+.dark .hover\:bg-green-100:hover { background-color: rgba(20, 83, 45, 0.3) !important; }
+.dark .hover\:bg-red-100:hover { background-color: rgba(127, 29, 29, 0.3) !important; }
+
+/* Shadow adaptations for dark mode */
+.dark .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25) !important; }
+.dark .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25) !important; }
+.dark .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.25) !important; }
+
+/* Input and form adaptations */
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark select,
+.dark textarea {
+  background-color: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #f9fafb !important;
+}
+
+.dark input[type="text"]:focus,
+.dark input[type="email"]:focus,
+.dark input[type="password"]:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 1px #3b82f6 !important;
+}
+
+/* Alert adaptations */
+.dark .bg-green-100 { background-color: rgba(20, 83, 45, 0.2) !important; }
+.dark .bg-red-100 { background-color: rgba(127, 29, 29, 0.2) !important; }
+.dark .text-green-800 { color: #86efac !important; }
+.dark .text-red-800 { color: #fca5a5 !important; }
+
+/* Enhanced shadcn/ui component adaptations */
+.dark [data-radix-select-content] {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+.dark [data-radix-select-item] {
+  color: #f9fafb !important;
+}
+
+.dark [data-radix-select-item]:hover {
+  background-color: #374151 !important;
+}
+
+/* Card component enhancements */
+.dark .card {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+}
+
+/* Enhanced smooth transitions for dark/light mode */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, background-image, text-decoration-color;
+  transition-duration: 400ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Specific smooth transitions for common elements */
+html {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+body {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94), color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Card transitions */
+.card,
+[data-radix-card] {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              border-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Button transitions */
+button {
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Input transitions */
+input,
+select,
+textarea {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Better badge styling in dark mode */
+.dark .badge {
+  background-color: #374151 !important;
+  color: #d1d5db !important;
+}
+
+/* Separator component in dark mode */
+.dark hr {
+  border-color: #374151 !important;
+}
+
+/* Enhanced Theme Toggle Icon Visibility */
+.theme-toggle-icon {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle-icon:hover {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transform: scale(1.1);
+}
+
+/* Enhanced button styling for theme toggle */
+.theme-toggle-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1), transparent);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.theme-toggle-button:hover::before {
+  opacity: 1;
+}
+
+/* Improved icon contrast in header */
+.header-icon {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Sun icon glow effect */
+.sun-icon {
+  color: #fbbf24 !important;
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.8)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  animation: subtle-pulse 3s ease-in-out infinite;
+}
+
+/* Moon icon glow effect */
+.moon-icon {
+  color: #e2e8f0 !important;
+  filter: drop-shadow(0 0 6px rgba(226, 232, 240, 0.8)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  animation: subtle-glow 3s ease-in-out infinite;
+}
+
+/* Subtle animation for sun icon */
+@keyframes subtle-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.8)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 1)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  }
+}
+
+/* Subtle animation for moon icon */
+@keyframes subtle-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(226, 232, 240, 0.8)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(226, 232, 240, 1)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  }
+}
+
+/* Enhanced button backdrop for better icon visibility */
+.theme-toggle-button {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(8px);
+}
+
+.dark .theme-toggle-button {
+  background: rgba(31, 41, 55, 0.3) !important;
+}
+
+.theme-toggle-button:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.15) !important;
+}
+
+.dark .theme-toggle-button:hover {
+  background: rgba(31, 41, 55, 0.5) !important;
+}
+
+/* Enhanced gradient transitions */
+.bg-gradient-to-r,
+.bg-gradient-to-br,
+.bg-gradient-to-b,
+.bg-gradient-to-l {
+  transition: background-image 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Text gradient transitions */
+.bg-clip-text {
+  transition: background-image 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Header smooth transition */
+header {
+  transition: background-image 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Sidebar smooth transition */
+aside {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background-image 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Footer smooth transition */
+footer {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Badge smooth transitions */
+.badge {
+  transition: background-color 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Avatar transitions */
+.avatar {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Icon transitions */
+svg {
+  transition: color 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              fill 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              stroke 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced theme transition on root element */
+:root {
+  transition: color-scheme 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Prevent flash of unstyled content during theme transitions */
+.theme-transition * {
+  transition-delay: 0ms !important;
+}
+
+/* Smooth scrollbar transitions */
+::-webkit-scrollbar {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+::-webkit-scrollbar-track {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+::-webkit-scrollbar-thumb {
+  transition: background-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Text selection smooth transition */
+::selection {
+  transition: background-color 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Enhanced focus transitions */
+:focus-visible {
+  transition: outline-color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Tooltip transitions */
+[data-radix-tooltip-content] {
+  transition: background-color 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
