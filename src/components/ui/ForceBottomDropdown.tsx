@@ -24,9 +24,7 @@ const ForceBottomDropdown: React.FC<ForceBottomDropdownProps> = ({
 }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        {trigger}
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent
         className={cn(className)}
         align={align}

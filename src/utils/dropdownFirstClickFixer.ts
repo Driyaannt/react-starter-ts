@@ -18,22 +18,24 @@ export class DropdownFirstClickFixer {
   init() {
     this.setupClickHandler();
     this.setupMutationObserver();
-    console.log('🎯 Dropdown First-Click Fixer initialized');
+    console.log("🎯 Dropdown First-Click Fixer initialized");
   }
 
   private setupClickHandler() {
     this.clickHandler = (event: Event) => {
       const target = event.target as HTMLElement;
-      
+
       // Check if click is on dropdown trigger
-      const trigger = target.closest('[data-radix-dropdown-menu-trigger]') as HTMLElement;
+      const trigger = target.closest(
+        "[data-radix-dropdown-menu-trigger]"
+      ) as HTMLElement;
       if (!trigger) return;
 
-      console.log('🖱️ Dropdown trigger clicked, preventing slide animation...');
-      
+      console.log("🖱️ Dropdown trigger clicked, preventing slide animation...");
+
       // IMMEDIATELY position any dropdown that appears
       this.preventSlideAnimation();
-      
+
       // Keep checking for a few milliseconds to catch delayed rendering
       setTimeout(() => this.preventSlideAnimation(), 0);
       setTimeout(() => this.preventSlideAnimation(), 1);
@@ -41,7 +43,7 @@ export class DropdownFirstClickFixer {
       setTimeout(() => this.preventSlideAnimation(), 10);
     };
 
-    document.addEventListener('click', this.clickHandler, true);
+    document.addEventListener("click", this.clickHandler, true);
   }
 
   private setupMutationObserver() {
@@ -50,11 +52,13 @@ export class DropdownFirstClickFixer {
 
       mutations.forEach((mutation) => {
         // Check for new dropdown content being added
-        if (mutation.type === 'childList') {
+        if (mutation.type === "childList") {
           mutation.addedNodes.forEach((node) => {
             if (node instanceof HTMLElement) {
-              if (node.matches('[data-radix-dropdown-menu-content]') || 
-                  node.querySelector('[data-radix-dropdown-menu-content]')) {
+              if (
+                node.matches("[data-radix-dropdown-menu-content]") ||
+                node.querySelector("[data-radix-dropdown-menu-content]")
+              ) {
                 shouldCheck = true;
               }
             }
@@ -62,15 +66,18 @@ export class DropdownFirstClickFixer {
         }
 
         // Check for attribute changes on dropdown content
-        if (mutation.type === 'attributes' && mutation.target instanceof HTMLElement) {
-          if (mutation.target.matches('[data-radix-dropdown-menu-content]')) {
+        if (
+          mutation.type === "attributes" &&
+          mutation.target instanceof HTMLElement
+        ) {
+          if (mutation.target.matches("[data-radix-dropdown-menu-content]")) {
             shouldCheck = true;
           }
         }
       });
 
       if (shouldCheck) {
-        console.log('🔍 DOM change detected, checking for dropdowns...');
+        console.log("🔍 DOM change detected, checking for dropdowns...");
         this.preventSlideAnimation();
       }
     });
@@ -79,30 +86,34 @@ export class DropdownFirstClickFixer {
       childList: true,
       subtree: true,
       attributes: true,
-      attributeFilter: ['data-state', 'data-side', 'style', 'class']
+      attributeFilter: ["data-state", "data-side", "style", "class"],
     });
   }
 
   private preventSlideAnimation() {
     // Find all dropdown content elements
-    const dropdowns = document.querySelectorAll('[data-radix-dropdown-menu-content]');
-    
+    const dropdowns = document.querySelectorAll(
+      "[data-radix-dropdown-menu-content]"
+    );
+
     dropdowns.forEach((dropdown) => {
       const dropdownEl = dropdown as HTMLElement;
-      
+
       // Find associated trigger
-      const triggers = document.querySelectorAll('[data-radix-dropdown-menu-trigger][aria-expanded="true"]');
-      
+      const triggers = document.querySelectorAll(
+        '[data-radix-dropdown-menu-trigger][aria-expanded="true"]'
+      );
+
       triggers.forEach((trigger) => {
         const triggerEl = trigger as HTMLElement;
         const rect = triggerEl.getBoundingClientRect();
-        
+
         // Only position if trigger is visible
         if (rect.width === 0 || rect.height === 0) return;
-        
+
         const targetTop = rect.bottom + 8;
         const targetLeft = rect.left;
-        
+
         // NUCLEAR OVERRIDE - completely replace all positioning
         dropdownEl.style.cssText = `
           position: fixed !important;
@@ -123,29 +134,47 @@ export class DropdownFirstClickFixer {
           scale: none !important;
           rotate: none !important;
         `;
-        
+
         // Remove ALL potential animation classes
         const animationClasses = [
-          'slide-in-from-top-1', 'slide-in-from-top-2', 'slide-in-from-top-4', 'slide-in-from-top-8',
-          'slide-in-from-bottom-1', 'slide-in-from-bottom-2', 'slide-in-from-bottom-4',
-          'slide-in-from-left-1', 'slide-in-from-left-2', 'slide-in-from-right-1', 'slide-in-from-right-2',
-          'animate-in', 'animate-out', 'fade-in-0', 'fade-out-0', 'zoom-in-95', 'zoom-out-95',
-          'duration-150', 'duration-200', 'duration-300', 'ease-in', 'ease-out', 'ease-in-out'
+          "slide-in-from-top-1",
+          "slide-in-from-top-2",
+          "slide-in-from-top-4",
+          "slide-in-from-top-8",
+          "slide-in-from-bottom-1",
+          "slide-in-from-bottom-2",
+          "slide-in-from-bottom-4",
+          "slide-in-from-left-1",
+          "slide-in-from-left-2",
+          "slide-in-from-right-1",
+          "slide-in-from-right-2",
+          "animate-in",
+          "animate-out",
+          "fade-in-0",
+          "fade-out-0",
+          "zoom-in-95",
+          "zoom-out-95",
+          "duration-150",
+          "duration-200",
+          "duration-300",
+          "ease-in",
+          "ease-out",
+          "ease-in-out",
         ];
-        
-        animationClasses.forEach(cls => {
+
+        animationClasses.forEach((cls) => {
           dropdownEl.classList.remove(cls);
         });
-        
+
         // Force correct data attributes
-        dropdownEl.setAttribute('data-side', 'bottom');
-        dropdownEl.setAttribute('data-positioned-immediately', 'true');
-        dropdownEl.removeAttribute('data-slide-direction');
-        
-        console.log('💥 NUCLEAR positioning applied:', {
+        dropdownEl.setAttribute("data-side", "bottom");
+        dropdownEl.setAttribute("data-positioned-immediately", "true");
+        dropdownEl.removeAttribute("data-slide-direction");
+
+        console.log("💥 NUCLEAR positioning applied:", {
           trigger: rect,
           dropdown: { top: targetTop, left: targetLeft },
-          element: dropdownEl
+          element: dropdownEl,
         });
       });
     });
@@ -156,13 +185,13 @@ export class DropdownFirstClickFixer {
       this.observer.disconnect();
       this.observer = null;
     }
-    
+
     if (this.clickHandler) {
-      document.removeEventListener('click', this.clickHandler, true);
+      document.removeEventListener("click", this.clickHandler, true);
       this.clickHandler = null;
     }
-    
-    console.log('🗑️ Dropdown First-Click Fixer destroyed');
+
+    console.log("🗑️ Dropdown First-Click Fixer destroyed");
   }
 }
 

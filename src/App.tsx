@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LanguageProvider } from "./context/LanguageContext";
@@ -30,8 +35,8 @@ const AppContent: React.FC = () => {
   return (
     <Routes>
       {/* Public route - Login */}
-      <Route 
-        path={ROUTES.LOGIN} 
+      <Route
+        path={ROUTES.LOGIN}
         element={
           !isAuthenticated ? (
             <>
@@ -41,12 +46,12 @@ const AppContent: React.FC = () => {
           ) : (
             <Navigate to={ROUTES.DASHBOARD} replace />
           )
-        } 
+        }
       />
-      
+
       {/* Protected routes - wrapped in Layout */}
-      <Route 
-        path="/*" 
+      <Route
+        path="/*"
         element={
           isAuthenticated ? (
             <>
@@ -58,7 +63,7 @@ const AppContent: React.FC = () => {
           ) : (
             <Navigate to={ROUTES.LOGIN} replace />
           )
-        } 
+        }
       />
     </Routes>
   );

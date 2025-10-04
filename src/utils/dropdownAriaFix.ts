@@ -5,26 +5,32 @@
 
 export const fixDropdownAriaHidden = () => {
   // This function should be called when dropdowns open to prevent aria-hidden conflicts
-  
+
   // Find all dropdown triggers that are currently expanded (open)
-  const expandedTriggers = document.querySelectorAll('[data-radix-dropdown-menu-trigger][aria-expanded="true"]');
-  
+  const expandedTriggers = document.querySelectorAll(
+    '[data-radix-dropdown-menu-trigger][aria-expanded="true"]'
+  );
+
   expandedTriggers.forEach((trigger) => {
     // Ensure the trigger and its parents are not hidden from assistive technology
     let element = trigger as HTMLElement;
-    
+
     while (element && element !== document.body) {
       // If the element has aria-hidden="true" and contains focus, remove it temporarily
-      if (element.getAttribute('aria-hidden') === 'true' && 
-          (element.contains(document.activeElement) || element === document.activeElement)) {
-        
+      if (
+        element.getAttribute("aria-hidden") === "true" &&
+        (element.contains(document.activeElement) ||
+          element === document.activeElement)
+      ) {
         // Store original value for restoration
-        element.setAttribute('data-original-aria-hidden', 'true');
-        element.removeAttribute('aria-hidden');
-        
-        console.log('Temporarily removed aria-hidden from focused element to prevent accessibility warning');
+        element.setAttribute("data-original-aria-hidden", "true");
+        element.removeAttribute("aria-hidden");
+
+        console.log(
+          "Temporarily removed aria-hidden from focused element to prevent accessibility warning"
+        );
       }
-      
+
       element = element.parentElement as HTMLElement;
     }
   });
@@ -32,11 +38,13 @@ export const fixDropdownAriaHidden = () => {
 
 export const restoreDropdownAriaHidden = () => {
   // Restore aria-hidden attributes when dropdowns close
-  const elementsToRestore = document.querySelectorAll('[data-original-aria-hidden="true"]');
-  
+  const elementsToRestore = document.querySelectorAll(
+    '[data-original-aria-hidden="true"]'
+  );
+
   elementsToRestore.forEach((element) => {
-    element.setAttribute('aria-hidden', 'true');
-    element.removeAttribute('data-original-aria-hidden');
+    element.setAttribute("aria-hidden", "true");
+    element.removeAttribute("data-original-aria-hidden");
   });
 };
 
@@ -53,5 +61,5 @@ export const handleDropdownAriaHidden = (open: boolean) => {
 export default {
   fixDropdownAriaHidden,
   restoreDropdownAriaHidden,
-  handleDropdownAriaHidden
+  handleDropdownAriaHidden,
 };

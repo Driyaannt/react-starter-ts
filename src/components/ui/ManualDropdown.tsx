@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { cn } from '@/lib/utils';
+import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { cn } from "@/lib/utils";
 
 interface ManualDropdownProps {
   trigger: React.ReactElement;
   children: React.ReactNode;
   className?: string;
-  align?: 'start' | 'center' | 'end';
+  align?: "start" | "center" | "end";
   sideOffset?: number;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -16,7 +16,7 @@ export const ManualDropdown: React.FC<ManualDropdownProps> = ({
   trigger,
   children,
   className,
-  align = 'start',
+  align = "start",
   sideOffset = 8,
   open,
   onOpenChange,
@@ -50,14 +50,20 @@ export const ManualDropdown: React.FC<ManualDropdownProps> = ({
     let left = triggerRect.left;
 
     // Adjust horizontal alignment
-    if (align === 'end') {
+    if (align === "end") {
       left = triggerRect.right - (dropdownRef.current?.offsetWidth || 140);
-    } else if (align === 'center') {
-      left = triggerRect.left + (triggerRect.width / 2) - ((dropdownRef.current?.offsetWidth || 140) / 2);
+    } else if (align === "center") {
+      left =
+        triggerRect.left +
+        triggerRect.width / 2 -
+        (dropdownRef.current?.offsetWidth || 140) / 2;
     }
 
     // Only position from top if there's really no space below
-    if (top + dropdownHeight > viewportHeight && triggerRect.top > dropdownHeight) {
+    if (
+      top + dropdownHeight > viewportHeight &&
+      triggerRect.top > dropdownHeight
+    ) {
       top = triggerRect.top - dropdownHeight - sideOffset;
     }
 
@@ -76,12 +82,12 @@ export const ManualDropdown: React.FC<ManualDropdownProps> = ({
   useEffect(() => {
     if (dropdownOpen) {
       updatePosition();
-      window.addEventListener('resize', updatePosition);
-      window.addEventListener('scroll', updatePosition);
-      
+      window.addEventListener("resize", updatePosition);
+      window.addEventListener("scroll", updatePosition);
+
       return () => {
-        window.removeEventListener('resize', updatePosition);
-        window.removeEventListener('scroll', updatePosition);
+        window.removeEventListener("resize", updatePosition);
+        window.removeEventListener("scroll", updatePosition);
       };
     }
   }, [dropdownOpen]);
@@ -103,8 +109,9 @@ export const ManualDropdown: React.FC<ManualDropdownProps> = ({
         }
       };
 
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
     }
   }, [dropdownOpen, isControlled, onOpenChange]);
 
@@ -115,8 +122,8 @@ export const ManualDropdown: React.FC<ManualDropdownProps> = ({
       trigger.props.onClick?.(e);
       handleToggle();
     },
-    'aria-expanded': dropdownOpen,
-    'aria-haspopup': 'menu',
+    "aria-expanded": dropdownOpen,
+    "aria-haspopup": "menu",
   });
 
   return (
@@ -127,14 +134,14 @@ export const ManualDropdown: React.FC<ManualDropdownProps> = ({
           <div
             ref={dropdownRef}
             className={cn(
-              'fixed z-[9999] min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
-              'animate-in fade-in-0 zoom-in-95 slide-in-from-top-2',
+              "fixed z-[9999] min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md",
+              "animate-in fade-in-0 zoom-in-95 slide-in-from-top-2",
               className
             )}
             style={{
               top: position.top,
               left: position.left,
-              transformOrigin: 'top center',
+              transformOrigin: "top center",
             }}
             role="menu"
             aria-orientation="vertical"
@@ -156,9 +163,9 @@ export const ManualDropdownItem: React.FC<{
   return (
     <div
       className={cn(
-        'relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors',
-        'hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-        'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+        "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors",
+        "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+        "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className
       )}
       onClick={onClick}

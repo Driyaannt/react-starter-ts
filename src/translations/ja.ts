@@ -77,7 +77,7 @@ const ja: Translations = {
     title: "ダッシュボード",
     subtitle: "システムの概要と統計",
     totalUsers: "総ユーザー数",
-    totalProducts: "総商品数",  
+    totalProducts: "総商品数",
     totalOrders: "総注文数",
     revenue: "売上",
     recentActivities: "最近のアクティビティ",

@@ -492,8 +492,8 @@ const UsersPage: React.FC = () => {
                     sticky="always"
                     collisionPadding={0}
                     style={{
-                      position: 'fixed',
-                      transformOrigin: 'top center',
+                      position: "fixed",
+                      transformOrigin: "top center",
                       zIndex: 9999,
                     }}
                     onPointerDownOutside={(e) => {

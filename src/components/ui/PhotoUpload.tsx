@@ -33,26 +33,29 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
 }) => {
   // const { t } = useLanguage(); // Not needed for now
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [previewPhoto, setPreviewPhoto] = useState<string | null>(currentPhoto || null);
+  const [previewPhoto, setPreviewPhoto] = useState<string | null>(
+    currentPhoto || null
+  );
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Size mappings
   const sizeClasses = {
     sm: "w-16 h-16",
-    md: "w-20 h-20", 
+    md: "w-20 h-20",
     lg: "w-24 h-24",
-    xl: "w-32 h-32"
+    xl: "w-32 h-32",
   };
 
   const handleFileSelect = (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      alert('Please select a valid image file');
+    if (!file.type.startsWith("image/")) {
+      alert("Please select a valid image file");
       return;
     }
 
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
-      alert('File size must be less than 5MB');
+    if (file.size > 5 * 1024 * 1024) {
+      // 5MB limit
+      alert("File size must be less than 5MB");
       return;
     }
 
@@ -74,7 +77,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    
+
     const file = e.dataTransfer.files[0];
     if (file) {
       handleFileSelect(file);
@@ -113,11 +116,15 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
     <>
       {/* Avatar with Camera Button */}
       <div className="relative group">
-        <Avatar className={`${sizeClasses[size]} transition-all duration-300 ${editable ? 'cursor-pointer hover:opacity-80' : ''}`}>
+        <Avatar
+          className={`${sizeClasses[size]} transition-all duration-300 ${
+            editable ? "cursor-pointer hover:opacity-80" : ""
+          }`}
+        >
           {currentPhoto && (
-            <AvatarImage 
-              src={currentPhoto} 
-              alt="Profile photo" 
+            <AvatarImage
+              src={currentPhoto}
+              alt="Profile photo"
               className="object-cover"
             />
           )}
@@ -125,7 +132,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
             {fallbackText}
           </AvatarFallback>
         </Avatar>
-        
+
         {editable && (
           <CustomButton
             size="sm"
@@ -159,9 +166,9 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
               <div className="relative">
                 <Avatar className="w-32 h-32 border-4 border-gray-100 dark:border-gray-700 shadow-lg">
                   {previewPhoto && (
-                    <AvatarImage 
-                      src={previewPhoto} 
-                      alt="Preview" 
+                    <AvatarImage
+                      src={previewPhoto}
+                      alt="Preview"
                       className="object-cover"
                     />
                   )}
@@ -180,27 +187,33 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
             {/* Upload Area */}
             <div
               className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 cursor-pointer ${
-                isDragging 
-                  ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 scale-[1.02]' 
-                  : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800/50'
+                isDragging
+                  ? "border-blue-500 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 scale-[1.02]"
+                  : "border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800/50"
               }`}
               onDrop={handleDrop}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
             >
-              <div className={`transition-all duration-300 ${
-                isDragging ? 'scale-110' : 'scale-100'
-              }`}>
+              <div
+                className={`transition-all duration-300 ${
+                  isDragging ? "scale-110" : "scale-100"
+                }`}
+              >
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 rounded-full flex items-center justify-center mb-4">
-                  <Upload className={`h-8 w-8 text-blue-600 dark:text-blue-400 transition-transform duration-300 ${
-                    isDragging ? 'rotate-12' : 'rotate-0'
-                  }`} />
+                  <Upload
+                    className={`h-8 w-8 text-blue-600 dark:text-blue-400 transition-transform duration-300 ${
+                      isDragging ? "rotate-12" : "rotate-0"
+                    }`}
+                  />
                 </div>
                 <p className="text-base font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  {isDragging ? 'Drop your photo here!' : 'Drag and drop your photo here, or'}
+                  {isDragging
+                    ? "Drop your photo here!"
+                    : "Drag and drop your photo here, or"}
                 </p>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   size="sm"
                   onClick={() => fileInputRef.current?.click()}
                   className="bg-white dark:bg-gray-800 border-2 hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-400 transition-all duration-200"
@@ -240,7 +253,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
           </div>
 
           <AlertDialogFooter className="flex gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-            <AlertDialogCancel 
+            <AlertDialogCancel
               onClick={() => setIsDialogOpen(false)}
               className="flex-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 border-0 h-11 font-medium transition-all duration-200"
             >
@@ -250,9 +263,9 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({
               onClick={handleSavePhoto}
               disabled={!previewPhoto}
               className={`flex-1 h-11 font-medium transition-all duration-200 ${
-                previewPhoto 
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl' 
-                  : 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+                previewPhoto
+                  ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl"
+                  : "bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed"
               }`}
             >
               <Check className="w-4 h-4 mr-2" />

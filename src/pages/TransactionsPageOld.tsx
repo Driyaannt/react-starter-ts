@@ -11,12 +11,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -79,7 +74,13 @@ interface Transaction {
   status: "pending" | "completed" | "failed";
   date: string;
   customer: string;
-  method: "cash" | "creditCard" | "debitCard" | "bankTransfer" | "paypal" | "crypto";
+  method:
+    | "cash"
+    | "creditCard"
+    | "debitCard"
+    | "bankTransfer"
+    | "paypal"
+    | "crypto";
   category: string;
 }
 
@@ -136,7 +137,9 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="max-w-[200px] truncate">{row.getValue("description")}</div>
+      <div className="max-w-[200px] truncate">
+        {row.getValue("description")}
+      </div>
     ),
   },
   {
@@ -161,7 +164,11 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
 
       return (
         <div className="text-right font-medium">
-          <span className={transaction.type === "income" ? "text-green-600" : "text-red-600"}>
+          <span
+            className={
+              transaction.type === "income" ? "text-green-600" : "text-red-600"
+            }
+          >
             {formatted}
           </span>
         </div>
@@ -174,9 +181,21 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
     cell: ({ row }) => {
       const type = row.getValue("type") as string;
       const typeConfig = {
-        income: { label: t.transactions.types.income, color: "bg-green-100 text-green-800", icon: TrendingUp },
-        expense: { label: t.transactions.types.expense, color: "bg-red-100 text-red-800", icon: TrendingDown },
-        transfer: { label: t.transactions.types.transfer, color: "bg-blue-100 text-blue-800", icon: ArrowUpDown },
+        income: {
+          label: t.transactions.types.income,
+          color: "bg-green-100 text-green-800",
+          icon: TrendingUp,
+        },
+        expense: {
+          label: t.transactions.types.expense,
+          color: "bg-red-100 text-red-800",
+          icon: TrendingDown,
+        },
+        transfer: {
+          label: t.transactions.types.transfer,
+          color: "bg-blue-100 text-blue-800",
+          icon: ArrowUpDown,
+        },
       };
       const config = typeConfig[type as keyof typeof typeConfig];
       const Icon = config.icon;
@@ -195,9 +214,21 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
     cell: ({ row }) => {
       const status = row.getValue("status") as string;
       const statusConfig = {
-        completed: { label: t.transactions.statuses.completed, color: "bg-green-100 text-green-800", icon: CheckCircle },
-        pending: { label: t.transactions.statuses.pending, color: "bg-yellow-100 text-yellow-800", icon: Clock },
-        failed: { label: t.transactions.statuses.failed, color: "bg-red-100 text-red-800", icon: XCircle },
+        completed: {
+          label: t.transactions.statuses.completed,
+          color: "bg-green-100 text-green-800",
+          icon: CheckCircle,
+        },
+        pending: {
+          label: t.transactions.statuses.pending,
+          color: "bg-yellow-100 text-yellow-800",
+          icon: Clock,
+        },
+        failed: {
+          label: t.transactions.statuses.failed,
+          color: "bg-red-100 text-red-800",
+          icon: XCircle,
+        },
       };
       const config = statusConfig[status as keyof typeof statusConfig];
       const Icon = config.icon;
@@ -246,7 +277,9 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
     ),
     cell: ({ row }) => {
       const date = new Date(row.getValue("date"));
-      return <div className="whitespace-nowrap">{date.toLocaleDateString()}</div>;
+      return (
+        <div className="whitespace-nowrap">{date.toLocaleDateString()}</div>
+      );
     },
   },
   {
@@ -264,9 +297,13 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>{t.transactions.actions.title}</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              {t.transactions.actions.title}
+            </DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(transaction.transactionId)}
+              onClick={() =>
+                navigator.clipboard.writeText(transaction.transactionId)
+              }
             >
               {t.transactions.actions.copyId}
             </DropdownMenuItem>
@@ -292,7 +329,7 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
 
 const TransactionsPage: React.FC = () => {
   const { t } = useLanguage();
-  
+
   // React Table states
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -310,7 +347,7 @@ const TransactionsPage: React.FC = () => {
       id: "1",
       transactionId: "TXN001",
       description: "Payment from John Doe",
-      amount: 1250.00,
+      amount: 1250.0,
       type: "income",
       status: "completed",
       date: "2024-10-04",
@@ -334,7 +371,7 @@ const TransactionsPage: React.FC = () => {
       id: "3",
       transactionId: "TXN003",
       description: "Transfer to savings",
-      amount: -1000.00,
+      amount: -1000.0,
       type: "transfer",
       status: "pending",
       date: "2024-10-03",
@@ -346,7 +383,7 @@ const TransactionsPage: React.FC = () => {
       id: "4",
       transactionId: "TXN004",
       description: "Freelance project payment",
-      amount: 2500.00,
+      amount: 2500.0,
       type: "income",
       status: "completed",
       date: "2024-10-02",
@@ -358,7 +395,7 @@ const TransactionsPage: React.FC = () => {
       id: "5",
       transactionId: "TXN005",
       description: "Marketing campaign",
-      amount: -750.00,
+      amount: -750.0,
       type: "expense",
       status: "failed",
       date: "2024-10-01",
@@ -370,7 +407,7 @@ const TransactionsPage: React.FC = () => {
       id: "6",
       transactionId: "TXN006",
       description: "Client consultation",
-      amount: 800.00,
+      amount: 800.0,
       type: "income",
       status: "completed",
       date: "2024-09-30",
@@ -383,14 +420,20 @@ const TransactionsPage: React.FC = () => {
   // Filter transactions based on search and filters
   const filteredTransactions = useMemo(() => {
     return transactions.filter((transaction) => {
-      const matchesSearch = 
-        transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        transaction.transactionId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      const matchesSearch =
+        transaction.description
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        transaction.transactionId
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
         transaction.customer.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      const matchesStatus = statusFilter === "all" || transaction.status === statusFilter;
-      const matchesType = typeFilter === "all" || transaction.type === typeFilter;
-      
+
+      const matchesStatus =
+        statusFilter === "all" || transaction.status === statusFilter;
+      const matchesType =
+        typeFilter === "all" || transaction.type === typeFilter;
+
       // Date filtering
       let matchesDate = true;
       if (dateRange.from && dateRange.to) {
@@ -407,9 +450,16 @@ const TransactionsPage: React.FC = () => {
   // Calculate statistics
   const stats = useMemo(() => {
     const totalTransactions = filteredTransactions.length;
-    const totalAmount = filteredTransactions.reduce((sum, t) => sum + Math.abs(t.amount), 0);
-    const pendingTransactions = filteredTransactions.filter(t => t.status === "pending").length;
-    const completedTransactions = filteredTransactions.filter(t => t.status === "completed").length;
+    const totalAmount = filteredTransactions.reduce(
+      (sum, t) => sum + Math.abs(t.amount),
+      0
+    );
+    const pendingTransactions = filteredTransactions.filter(
+      (t) => t.status === "pending"
+    ).length;
+    const completedTransactions = filteredTransactions.filter(
+      (t) => t.status === "completed"
+    ).length;
 
     return {
       totalTransactions,
@@ -461,40 +511,51 @@ const TransactionsPage: React.FC = () => {
 
   const formatAmount = (amount: number) => {
     const isPositive = amount > 0;
-    const formattedAmount = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    const formattedAmount = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
     }).format(Math.abs(amount));
-    
+
     return (
-      <span className={isPositive ? "text-green-600 font-semibold" : "text-red-600 font-semibold"}>
-        {isPositive ? "+" : "-"}{formattedAmount}
+      <span
+        className={
+          isPositive
+            ? "text-green-600 font-semibold"
+            : "text-red-600 font-semibold"
+        }
+      >
+        {isPositive ? "+" : "-"}
+        {formattedAmount}
       </span>
     );
   };
 
   const getPaymentMethodDisplay = (method: string) => {
-    return t.transactions.paymentMethod[method as keyof typeof t.transactions.paymentMethod] || method;
+    return (
+      t.transactions.paymentMethod[
+        method as keyof typeof t.transactions.paymentMethod
+      ] || method
+    );
   };
 
   // Event handlers
   const handleExport = async () => {
     await exportLoading.withLoading(async () => {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       console.log("Export completed");
     });
   };
 
   const handleImport = async () => {
     await importLoading.withLoading(async () => {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       console.log("Import completed");
     });
   };
 
   const handleAddTransaction = async () => {
     await addTransactionLoading.withLoading(async () => {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       console.log("Transaction added");
     });
   };
@@ -556,7 +617,9 @@ const TransactionsPage: React.FC = () => {
             <DollarSign className="h-5 w-5 text-blue-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-900">{stats.totalTransactions}</div>
+            <div className="text-2xl font-bold text-blue-900">
+              {stats.totalTransactions}
+            </div>
             <p className="text-xs text-blue-600 mt-1">
               {t.dashboard.vsLastMonth}
             </p>
@@ -588,7 +651,9 @@ const TransactionsPage: React.FC = () => {
             <Clock className="h-5 w-5 text-yellow-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-yellow-900">{stats.pendingTransactions}</div>
+            <div className="text-2xl font-bold text-yellow-900">
+              {stats.pendingTransactions}
+            </div>
             <p className="text-xs text-yellow-600 mt-1">
               -2% {t.dashboard.vsLastMonth}
             </p>
@@ -603,7 +668,9 @@ const TransactionsPage: React.FC = () => {
             <CheckCircle className="h-5 w-5 text-purple-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-purple-900">{stats.completedTransactions}</div>
+            <div className="text-2xl font-bold text-purple-900">
+              {stats.completedTransactions}
+            </div>
             <p className="text-xs text-purple-600 mt-1">
               +8% {t.dashboard.vsLastMonth}
             </p>
@@ -621,7 +688,10 @@ const TransactionsPage: React.FC = () => {
         <CardContent className="space-y-6">
           {/* Search */}
           <div className="space-y-2">
-            <Label htmlFor="search" className="text-sm font-medium text-gray-700">
+            <Label
+              htmlFor="search"
+              className="text-sm font-medium text-gray-700"
+            >
               {t.common.search}
             </Label>
             <div className="relative">
@@ -630,7 +700,9 @@ const TransactionsPage: React.FC = () => {
                 id="search"
                 placeholder={t.transactions.searchTransactions}
                 value={searchTerm}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearchTerm(e.target.value)
+                }
                 className="pl-10 h-10 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300"
               />
             </div>
@@ -648,10 +720,18 @@ const TransactionsPage: React.FC = () => {
                   <SelectValue placeholder={t.transactions.allStatuses} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t.transactions.allStatuses}</SelectItem>
-                  <SelectItem value="pending">{t.transactions.pending}</SelectItem>
-                  <SelectItem value="completed">{t.transactions.completed}</SelectItem>
-                  <SelectItem value="failed">{t.transactions.failed}</SelectItem>
+                  <SelectItem value="all">
+                    {t.transactions.allStatuses}
+                  </SelectItem>
+                  <SelectItem value="pending">
+                    {t.transactions.pending}
+                  </SelectItem>
+                  <SelectItem value="completed">
+                    {t.transactions.completed}
+                  </SelectItem>
+                  <SelectItem value="failed">
+                    {t.transactions.failed}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -667,9 +747,15 @@ const TransactionsPage: React.FC = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">{t.transactions.allTypes}</SelectItem>
-                  <SelectItem value="income">{t.transactions.income}</SelectItem>
-                  <SelectItem value="expense">{t.transactions.expense}</SelectItem>
-                  <SelectItem value="transfer">{t.transactions.transfer}</SelectItem>
+                  <SelectItem value="income">
+                    {t.transactions.income}
+                  </SelectItem>
+                  <SelectItem value="expense">
+                    {t.transactions.expense}
+                  </SelectItem>
+                  <SelectItem value="transfer">
+                    {t.transactions.transfer}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -682,8 +768,8 @@ const TransactionsPage: React.FC = () => {
               <Input
                 type="date"
                 value={dateRange.from}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                  setDateRange(prev => ({ ...prev, from: e.target.value }))
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setDateRange((prev) => ({ ...prev, from: e.target.value }))
                 }
                 className="h-10 border-2 border-gray-200 rounded-lg focus:border-blue-500"
               />
@@ -696,8 +782,8 @@ const TransactionsPage: React.FC = () => {
               <Input
                 type="date"
                 value={dateRange.to}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-                  setDateRange(prev => ({ ...prev, to: e.target.value }))
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setDateRange((prev) => ({ ...prev, to: e.target.value }))
                 }
                 className="h-10 border-2 border-gray-200 rounded-lg focus:border-blue-500"
               />
@@ -730,32 +816,59 @@ const TransactionsPage: React.FC = () => {
             <Table>
               <TableHeader>
                 <TableRow className="bg-gray-50 hover:bg-gray-50">
-                  <TableHead className="font-semibold text-gray-900">{t.transactions.transactionId}</TableHead>
-                  <TableHead className="font-semibold text-gray-900">{t.transactions.description}</TableHead>
-                  <TableHead className="font-semibold text-gray-900">{t.transactions.customer}</TableHead>
-                  <TableHead className="font-semibold text-gray-900">{t.transactions.type}</TableHead>
-                  <TableHead className="font-semibold text-gray-900">{t.transactions.amount}</TableHead>
-                  <TableHead className="font-semibold text-gray-900">{t.transactions.method}</TableHead>
-                  <TableHead className="font-semibold text-gray-900">{t.common.status}</TableHead>
-                  <TableHead className="font-semibold text-gray-900">{t.transactions.date}</TableHead>
-                  <TableHead className="font-semibold text-gray-900 text-right">{t.common.actions}</TableHead>
+                  <TableHead className="font-semibold text-gray-900">
+                    {t.transactions.transactionId}
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-900">
+                    {t.transactions.description}
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-900">
+                    {t.transactions.customer}
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-900">
+                    {t.transactions.type}
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-900">
+                    {t.transactions.amount}
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-900">
+                    {t.transactions.method}
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-900">
+                    {t.common.status}
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-900">
+                    {t.transactions.date}
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-900 text-right">
+                    {t.common.actions}
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredTransactions.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={9} className="text-center py-8 text-gray-500">
+                    <TableCell
+                      colSpan={9}
+                      className="text-center py-8 text-gray-500"
+                    >
                       {t.transactions.noTransactions}
                     </TableCell>
                   </TableRow>
                 ) : (
                   filteredTransactions.map((transaction) => (
-                    <TableRow key={transaction.id} className="hover:bg-gray-50 transition-colors">
+                    <TableRow
+                      key={transaction.id}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
                       <TableCell className="font-medium text-blue-600">
                         {transaction.transactionId}
                       </TableCell>
                       <TableCell>
-                        <div className="max-w-[200px] truncate" title={transaction.description}>
+                        <div
+                          className="max-w-[200px] truncate"
+                          title={transaction.description}
+                        >
                           {transaction.description}
                         </div>
                       </TableCell>
@@ -764,9 +877,11 @@ const TransactionsPage: React.FC = () => {
                         <div className="flex items-center gap-2">
                           {getTypeIcon(transaction.type)}
                           <span className="capitalize">
-                            {transaction.type === "income" ? t.transactions.income : 
-                             transaction.type === "expense" ? t.transactions.expense : 
-                             t.transactions.transfer}
+                            {transaction.type === "income"
+                              ? t.transactions.income
+                              : transaction.type === "expense"
+                              ? t.transactions.expense
+                              : t.transactions.transfer}
                           </span>
                         </div>
                       </TableCell>
@@ -778,17 +893,21 @@ const TransactionsPage: React.FC = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge 
+                        <Badge
                           variant={getStatusBadgeVariant(transaction.status)}
                           className="flex items-center gap-1 w-fit"
                         >
                           {getStatusIcon(transaction.status)}
-                          {transaction.status === "pending" ? t.transactions.pending : 
-                           transaction.status === "completed" ? t.transactions.completed : 
-                           t.transactions.failed}
+                          {transaction.status === "pending"
+                            ? t.transactions.pending
+                            : transaction.status === "completed"
+                            ? t.transactions.completed
+                            : t.transactions.failed}
                         </Badge>
                       </TableCell>
-                      <TableCell>{new Date(transaction.date).toLocaleDateString()}</TableCell>
+                      <TableCell>
+                        {new Date(transaction.date).toLocaleDateString()}
+                      </TableCell>
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
@@ -796,7 +915,11 @@ const TransactionsPage: React.FC = () => {
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" side="bottom" sideOffset={8}>
+                          <DropdownMenuContent
+                            align="end"
+                            side="bottom"
+                            sideOffset={8}
+                          >
                             <DropdownMenuItem className="flex items-center gap-2">
                               <Eye className="h-4 w-4" />
                               {t.transactions.viewDetails}

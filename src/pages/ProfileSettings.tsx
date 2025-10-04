@@ -85,7 +85,7 @@ const ProfileSettings: React.FC = () => {
 
       // Here you would typically upload the photo to your server
       // and save the profile data
-      console.log('Saving profile data:', { formData, profilePhoto });
+      console.log("Saving profile data:", { formData, profilePhoto });
 
       showAlert(
         "success",
@@ -175,10 +175,14 @@ const ProfileSettings: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full blur-xl opacity-20 animate-pulse"></div>
               <PhotoUpload
                 currentPhoto={profilePhoto || undefined}
-                fallbackText={user?.name
-                  ?.split(" ")
-                  .map((n) => n[0])
-                  .join("") || user?.username?.slice(0, 2).toUpperCase() || "U"}
+                fallbackText={
+                  user?.name
+                    ?.split(" ")
+                    .map((n) => n[0])
+                    .join("") ||
+                  user?.username?.slice(0, 2).toUpperCase() ||
+                  "U"
+                }
                 size="lg"
                 onPhotoChange={setProfilePhoto}
                 editable={true}

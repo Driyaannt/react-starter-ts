@@ -5,7 +5,7 @@ export const getForceBottomDropdownProps = (options?: {
   className?: string;
 }) => {
   const { align = "start", sideOffset = 8, className = "" } = options || {};
-  
+
   return {
     side: "bottom" as const,
     align,

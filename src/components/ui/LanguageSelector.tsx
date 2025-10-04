@@ -37,8 +37,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
   if (variant === "header") {
     return (
-      <DropdownMenu 
-        open={isOpen} 
+      <DropdownMenu
+        open={isOpen}
         onOpenChange={(open) => {
           setIsOpen(open);
           // Fix aria-hidden focus conflicts
@@ -110,8 +110,8 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
             {t.profile.languageDesc}
           </p>
         </div>
-        <DropdownMenu 
-          open={isOpen} 
+        <DropdownMenu
+          open={isOpen}
           onOpenChange={(open) => {
             setIsOpen(open);
             // Fix aria-hidden focus conflicts

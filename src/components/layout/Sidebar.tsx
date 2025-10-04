@@ -66,8 +66,18 @@ const Sidebar: React.FC<SidebarProps> = ({
       path: ROUTES.USERS,
       badge: "12",
     },
-    { id: "users-page", label: t.nav.users, icon: Users, path: ROUTES.USERS_PAGE },
-    { id: "products", label: t.nav.products, icon: Package, path: ROUTES.PRODUCTS },
+    {
+      id: "users-page",
+      label: t.nav.users,
+      icon: Users,
+      path: ROUTES.USERS_PAGE,
+    },
+    {
+      id: "products",
+      label: t.nav.products,
+      icon: Package,
+      path: ROUTES.PRODUCTS,
+    },
     {
       id: "orders",
       label: t.nav.orders,

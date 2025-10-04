@@ -79,8 +79,8 @@ const Header: React.FC<HeaderProps> = () => {
           {/* Separator */}
           <div className="h-6 w-px bg-white/20 dark:bg-gray-600/40"></div>
 
-          <DropdownMenu 
-            open={dropdownOpen} 
+          <DropdownMenu
+            open={dropdownOpen}
             onOpenChange={(open) => {
               setDropdownOpen(open);
               // Fix aria-hidden focus conflicts
@@ -94,9 +94,9 @@ const Header: React.FC<HeaderProps> = () => {
               >
                 <Avatar className="h-8 w-8">
                   {profilePhoto && (
-                    <AvatarImage 
-                      src={profilePhoto} 
-                      alt="Profile photo" 
+                    <AvatarImage
+                      src={profilePhoto}
+                      alt="Profile photo"
                       className="object-cover"
                     />
                   )}
@@ -130,9 +130,9 @@ const Header: React.FC<HeaderProps> = () => {
                 <div className="flex items-center gap-2">
                   <Avatar className="h-6 w-6">
                     {profilePhoto && (
-                      <AvatarImage 
-                        src={profilePhoto} 
-                        alt="Profile photo" 
+                      <AvatarImage
+                        src={profilePhoto}
+                        alt="Profile photo"
                         className="object-cover"
                       />
                     )}
