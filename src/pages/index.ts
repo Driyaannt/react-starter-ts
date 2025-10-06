@@ -1,6 +1,8 @@
-// Pages
-export { default as Dashboard } from './Dashboard';
-export { default as Login } from './Login';
-export { default as UserManagement } from './UserManagement';
-export { default as UsersPage } from './UsersPage';
-export { default as ProfileSettings } from './ProfileSettings';
+// Re-export admin pages
+export * from "./admin";
+
+// Re-export user pages
+export * from "./user";
+
+// Common pages
+export { default as NotFoundPage } from "./NotFoundPage";

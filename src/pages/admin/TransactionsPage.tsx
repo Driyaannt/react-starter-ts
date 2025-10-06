@@ -166,9 +166,9 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
         <div className="text-right">
           <span
             className={`font-semibold px-2 py-1 rounded-md ${
-              transaction.type === "income" 
-              ? "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/20" 
-              : "text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-900/20"
+              transaction.type === "income"
+                ? "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-900/20"
+                : "text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-900/20"
             }`}
           >
             {formatted}
@@ -295,10 +295,10 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
       const date = new Date(row.getValue("date"));
       return (
         <div className="whitespace-nowrap text-gray-900 dark:text-gray-100 font-medium">
-          {date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
+          {date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
           })}
         </div>
       );
@@ -313,8 +313,8 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               className="h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:scale-105"
             >
@@ -322,9 +322,9 @@ const createColumns = (t: any): ColumnDef<Transaction>[] => [
               <MoreHorizontal className="h-4 w-4 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent 
-            align="end" 
-            side="bottom" 
+          <DropdownMenuContent
+            align="end"
+            side="bottom"
             sideOffset={8}
             className="w-[180px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg"
           >

@@ -1,25 +1,25 @@
 // Route constants for type safety and consistency
 export const ROUTES = {
   // Auth routes
-  LOGIN: "/login",
+  LOGIN: "/admin/login",
 
   // Main app routes
-  ROOT: "/",
-  DASHBOARD: "/dashboard",
+  ROOT: "/admin",
+  DASHBOARD: "/admin/dashboard",
 
   // User management
-  USERS: "/users",
-  USERS_PAGE: "/users-page",
+  USERS: "/admin/users",
+  USERS_PAGE: "/admin/users-page",
 
   // Business
-  PRODUCTS: "/products",
-  ORDERS: "/orders",
-  ANALYTICS: "/analytics",
-  TRANSACTIONS: "/transactions",
+  PRODUCTS: "/admin/products",
+  ORDERS: "/admin/orders",
+  ANALYTICS: "/admin/analytics",
+  TRANSACTIONS: "/admin/transactions",
 
   // Settings
-  SETTINGS: "/settings",
-  PROFILE_SETTINGS: "/profile-settings",
+  SETTINGS: "/admin/settings",
+  PROFILE_SETTINGS: "/admin/profile-settings",
 } as const;
 
 // Route metadata for navigation
