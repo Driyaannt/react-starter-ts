@@ -47,12 +47,14 @@ export { default as Invoices } from "./Invoices";
 ### **Step 4: DONE! 🎉**
 
 **Routes otomatis tersedia:**
+
 - URL: `http://localhost:5174/admin/invoices`
 - Tidak perlu run command
 - Tidak perlu restart server
 - Tidak perlu edit AppRoutes.tsx
 
 **Lihat di console:**
+
 ```
 ✅ [Auto Routes] Routes regenerated successfully!
 📄 [Auto Routes] New page detected: Invoices
@@ -63,6 +65,7 @@ export { default as Invoices } from "./Invoices";
 ## 🎯 Sistem Otomatis Deteksi:
 
 ### ✅ **Deteksi File Baru**
+
 ```bash
 # Buat file ini:
 src/pages/admin/Reports/index.tsx
@@ -73,6 +76,7 @@ src/pages/admin/Reports/index.tsx
 ```
 
 ### ✅ **Deteksi File Dihapus**
+
 ```bash
 # Hapus folder:
 src/pages/admin/OldPage/
@@ -83,6 +87,7 @@ src/pages/admin/OldPage/
 ```
 
 ### ✅ **Hot Module Replacement (HMR)**
+
 - File `generated-routes.tsx` otomatis update
 - Browser auto-refresh
 - State tetap preserved (jika memungkinkan)
@@ -93,15 +98,16 @@ src/pages/admin/OldPage/
 
 Generator otomatis convert nama folder ke URL:
 
-| Folder Name | Route URL | Component Name |
-|-------------|-----------|----------------|
-| `Dashboard` | `/admin/dashboard` | Dashboard |
-| `Users` | `/admin/users` | Users |
-| `ProductsPage` | `/admin/products` | ProductsPage |
+| Folder Name      | Route URL                | Component Name |
+| ---------------- | ------------------------ | -------------- |
+| `Dashboard`      | `/admin/dashboard`       | Dashboard      |
+| `Users`          | `/admin/users`           | Users          |
+| `ProductsPage`   | `/admin/products`        | ProductsPage   |
 | `UserManagement` | `/admin/user-management` | UserManagement |
-| `ReportsPage` | `/admin/reports` | ReportsPage |
+| `ReportsPage`    | `/admin/reports`         | ReportsPage    |
 
 **Aturan Konversi:**
+
 1. PascalCase → kebab-case
 2. Suffix "Page" dihapus dari URL
 3. Login page = `login` (special case)
@@ -111,6 +117,7 @@ Generator otomatis convert nama folder ke URL:
 ## 🔥 Keuntungan Sistem Ini
 
 ### **Sebelum (Manual):**
+
 ```tsx
 // AppRoutes.tsx - edit manual setiap kali
 <Route path="dashboard" element={<Dashboard />} />
@@ -122,11 +129,14 @@ Generator otomatis convert nama folder ke URL:
 ```
 
 ### **Sesudah (Auto):**
+
 ```tsx
 // AppRoutes.tsx - setup sekali, forever automated! ✨
-{adminRoutes.map((route) => (
-  <Route key={route.path} path={route.path} element={route.element} />
-))}
+{
+  adminRoutes.map((route) => (
+    <Route key={route.path} path={route.path} element={route.element} />
+  ));
+}
 ```
 
 **Tambah 100 pages?** Cuma buat folder + file, DONE! 🚀
@@ -150,6 +160,7 @@ npm run dev
 ```
 
 ### **Saat Buat File Baru:**
+
 ```bash
 # Otomatis muncul di console:
 📄 [Auto Routes] New page detected: Customers
@@ -232,12 +243,14 @@ export const adminRoutes = [
 ## 💡 Best Practices
 
 ### ✅ **DO:**
+
 - Gunakan PascalCase untuk folder name (`ProductsPage`)
 - Selalu buat `index.tsx` di folder
 - Export component sebagai default
 - Export di `pages/admin/index.ts`
 
 ### ❌ **DON'T:**
+
 - Jangan edit `generated-routes.tsx` manual
 - Jangan gunakan nama file selain `index.tsx`
 - Jangan lupa export di index.ts
@@ -247,11 +260,13 @@ export const adminRoutes = [
 ## 🎉 Kesimpulan
 
 **Workflow Baru:**
+
 1. 📁 Buat folder baru
 2. 📝 Buat index.tsx
 3. ✅ DONE! Route otomatis tersedia!
 
 **No more:**
+
 - ❌ Edit AppRoutes.tsx manual
 - ❌ Run command generate-routes
 - ❌ Restart server
@@ -264,7 +279,7 @@ export const adminRoutes = [
 ## 📚 Tech Stack
 
 - **Vite Plugin System** - File watching & HMR
-- **Node.js fs.watch** - Real-time file detection  
+- **Node.js fs.watch** - Real-time file detection
 - **Dynamic Import** - Lazy loading components
 - **TypeScript** - Type-safe routes
 

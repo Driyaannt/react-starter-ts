@@ -49,9 +49,7 @@ const RealTimeTest = () => {
               Zero Delay
             </h3>
             <div className="text-blue-700 space-y-3">
-              <p className="font-semibold">
-                No need to:
-              </p>
+              <p className="font-semibold">No need to:</p>
               <ul className="space-y-1">
                 <li className="flex items-center">
                   <span className="text-red-500 mr-2">✗</span>
@@ -102,7 +100,7 @@ const RealTimeTest = () => {
             <div>📄 [Auto Routes] New page detected: RealTimeTest</div>
             <div>🔄 [Auto Routes] New page: RealTimeTest</div>
             <div>✅ [Auto Routes] Routes regenerated successfully!</div>
-            <div>   📝 File: src\routes\generated-routes.tsx</div>
+            <div> 📝 File: src\routes\generated-routes.tsx</div>
           </div>
         </div>
       </div>

@@ -169,7 +169,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ onBack }) => {
             <div className="flex items-center">
               <Button
                 variant="ghost"
-                onClick={() => onBack ? onBack() : window.history.back()}
+                onClick={() => (onBack ? onBack() : window.history.back())}
                 className="mr-4 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />

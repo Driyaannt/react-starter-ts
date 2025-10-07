@@ -3,6 +3,7 @@
 ## Menambah Page Baru (3 Steps)
 
 ### 1️⃣ Buat Folder & Component
+
 ```powershell
 # Buat folder (misalnya ReportsPage)
 mkdir src/pages/admin/ReportsPage
@@ -20,11 +21,13 @@ export default ReportsPage;
 ```
 
 ### 2️⃣ Generate Routes
+
 ```bash
 npm run generate-routes
 ```
 
 Output akan menampilkan route baru:
+
 ```
 📊 Summary:
    Admin routes: 11
@@ -32,6 +35,7 @@ Output akan menampilkan route baru:
 ```
 
 ### 3️⃣ (Opsional) Export di index.ts
+
 ```tsx
 // src/pages/admin/index.ts
 export { default as ReportsPage } from "./ReportsPage";
@@ -44,6 +48,7 @@ Route `/admin/reports` langsung bisa diakses!
 ## 🔄 Development Mode
 
 Gunakan watch mode agar auto-regenerate saat ada perubahan:
+
 ```bash
 npm run watch-routes
 ```

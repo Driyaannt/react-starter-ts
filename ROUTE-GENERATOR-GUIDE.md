@@ -49,7 +49,7 @@ export default Invoices;
 Tambahkan export:
 
 ```typescript
-export { default as Invoices } from './Invoices';
+export { default as Invoices } from "./Invoices";
 ```
 
 ### **Step 3: Generate Routes**
@@ -61,6 +61,7 @@ npm run generate-routes
 ```
 
 **Output:**
+
 ```
 ✅ Generated routes for 11 admin pages
 ✅ Generated routes for 2 user pages
@@ -82,6 +83,7 @@ npm run generate-routes:watch
 ```
 
 Sekarang setiap kali Anda:
+
 - Tambah folder baru
 - Tambah file index.tsx
 - Hapus folder
@@ -96,19 +98,19 @@ File `src/routes/generated-routes.ts` berisi:
 
 ```typescript
 // 🤖 AUTO-GENERATED - DO NOT EDIT MANUALLY
-import { lazy } from 'react';
+import { lazy } from "react";
 
 // Admin Page Imports
-export const Dashboard = lazy(() => import('@/pages/admin/Dashboard'));
-export const Users = lazy(() => import('@/pages/admin/Users'));
-export const Invoices = lazy(() => import('@/pages/admin/Invoices'));
+export const Dashboard = lazy(() => import("@/pages/admin/Dashboard"));
+export const Users = lazy(() => import("@/pages/admin/Users"));
+export const Invoices = lazy(() => import("@/pages/admin/Invoices"));
 // ... dll
 
 // Route Configuration
 export const adminRoutes = [
-  { path: 'dashboard', component: Dashboard },
-  { path: 'users', component: Users },
-  { path: 'invoices', component: Invoices },
+  { path: "dashboard", component: Dashboard },
+  { path: "users", component: Users },
+  { path: "invoices", component: Invoices },
   // ... dll
 ];
 ```
@@ -120,16 +122,12 @@ export const adminRoutes = [
 File `AppRoutes.tsx` menggunakan routes yang di-generate:
 
 ```tsx
-import { adminRoutes } from './generated-routes';
+import { adminRoutes } from "./generated-routes";
 
 // Routes otomatis ter-mapping
 adminRoutes.map(({ path, component: Component }) => (
-  <Route 
-    key={path} 
-    path={path} 
-    element={<Component />} 
-  />
-))
+  <Route key={path} path={path} element={<Component />} />
+));
 ```
 
 ---
@@ -156,6 +154,7 @@ adminRoutes.map(({ path, component: Component }) => (
 ### Route name salah?
 
 Generator menggunakan **kebab-case** dari nama folder:
+
 - `Dashboard` → `dashboard`
 - `UserManagement` → `user-management`
 - `ReportsPage` → `reports-page`
@@ -179,12 +178,15 @@ Generator menggunakan **kebab-case** dari nama folder:
 
 ```tsx
 // AppRoutes.tsx - sekali setup, forever automated!
-{adminRoutes.map(({ path, component: Component }) => (
-  <Route key={path} path={path} element={<Component />} />
-))}
+{
+  adminRoutes.map(({ path, component: Component }) => (
+    <Route key={path} path={path} element={<Component />} />
+  ));
+}
 ```
 
-**Tambah page baru?** 
+**Tambah page baru?**
+
 1. Buat folder
 2. Run `npm run generate-routes`
 3. Done! ✨

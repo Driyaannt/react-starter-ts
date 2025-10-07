@@ -59,6 +59,7 @@ src/
 ## 🔍 **Detail Setiap File:**
 
 ### **[1] Your New Page**
+
 ```tsx
 // src/pages/admin/NewPage/index.tsx
 
@@ -70,6 +71,7 @@ export default NewPage;
 ```
 
 ### **[2] Generated Routes (AUTO-UPDATED)**
+
 ```tsx
 // src/routes/generated-routes.tsx
 // 🤖 THIS FILE IS AUTO-GENERATED
@@ -77,18 +79,19 @@ export default NewPage;
 import React from "react";
 import Dashboard from "@/pages/admin/Dashboard";
 import Customers from "@/pages/admin/Customers";
-import NewPage from "@/pages/admin/NewPage";    // ← AUTO-ADDED!
+import NewPage from "@/pages/admin/NewPage"; // ← AUTO-ADDED!
 // ... imports lainnya
 
 export const adminRoutes: RouteConfig[] = [
   { path: "dashboard", element: <Dashboard /> },
   { path: "customers", element: <Customers /> },
-  { path: "new-page", element: <NewPage /> },    // ← AUTO-ADDED!
+  { path: "new-page", element: <NewPage /> }, // ← AUTO-ADDED!
   // ... routes lainnya
 ];
 ```
 
 ### **[3] AppRoutes (TIDAK PERLU EDIT)**
+
 ```tsx
 // src/routes/AppRoutes.tsx
 
@@ -99,10 +102,10 @@ const AppRoutes = () => {
     <Routes>
       {/* Loop semua routes dari generated-routes.tsx */}
       {adminRoutes.map((route) => (
-        <Route 
-          key={route.path} 
-          path={route.path}        // ← "new-page"
-          element={route.element}   // ← <NewPage />
+        <Route
+          key={route.path}
+          path={route.path} // ← "new-page"
+          element={route.element} // ← <NewPage />
         />
       ))}
     </Routes>
@@ -111,6 +114,7 @@ const AppRoutes = () => {
 ```
 
 ### **[4] App.tsx (TIDAK PERLU EDIT)**
+
 ```tsx
 // src/App.tsx
 
@@ -120,7 +124,7 @@ const AdminAppContent = () => {
   return (
     <div className="admin-layout">
       <Sidebar />
-      <AppRoutes />  {/* ← Semua routes di sini */}
+      <AppRoutes /> {/* ← Semua routes di sini */}
     </div>
   );
 };
@@ -133,6 +137,7 @@ const AdminAppContent = () => {
 Dari file `generated-routes.tsx` saat ini:
 
 ### **Admin Routes (13 routes):**
+
 ```
 Base URL: http://localhost:5173/admin/
 
@@ -152,6 +157,7 @@ Base URL: http://localhost:5173/admin/
 ```
 
 ### **User Routes (2 routes):**
+
 ```
 Base URL: http://localhost:5173/
 
@@ -166,11 +172,13 @@ Base URL: http://localhost:5173/
 ### **Scenario: Buat Halaman "Reports"**
 
 #### **Step 1: Buat File**
+
 ```bash
 mkdir src/pages/admin/Reports
 ```
 
 Buat `src/pages/admin/Reports/index.tsx`:
+
 ```tsx
 const Reports = () => {
   return (
@@ -185,12 +193,14 @@ export default Reports;
 ```
 
 #### **Step 2: Export (Optional tapi recommended)**
+
 ```tsx
 // src/pages/admin/index.ts
 export { default as Reports } from "./Reports";
 ```
 
 #### **Step 3: Plugin Auto-Detect**
+
 ```
 Console output:
 📄 [Auto Routes] New page detected: Reports
@@ -198,18 +208,20 @@ Console output:
 ```
 
 #### **Step 4: Check Generated File**
+
 ```tsx
 // src/routes/generated-routes.tsx (AUTO-UPDATED!)
 
-import Reports from "@/pages/admin/Reports";  // ← Added
+import Reports from "@/pages/admin/Reports"; // ← Added
 
 export const adminRoutes = [
   // ... routes lain
-  { path: "reports", element: <Reports /> },   // ← Added
+  { path: "reports", element: <Reports /> }, // ← Added
 ];
 ```
 
 #### **Step 5: Route Ready!**
+
 ```
 ✅ URL: http://localhost:5173/admin/reports
 ✅ Component: <Reports />
@@ -284,13 +296,16 @@ export const adminRoutes = [
 ## 💡 **Key Points:**
 
 ### **File yang Otomatis Berubah:**
+
 ✅ `src/routes/generated-routes.tsx` - **AUTO-UPDATED oleh plugin**
 
 ### **File yang Tidak Perlu Diubah:**
+
 ❌ `src/routes/AppRoutes.tsx` - Sudah setup sekali untuk selamanya
 ❌ `src/App.tsx` - Sudah setup, tidak perlu edit
 
 ### **Yang Perlu Anda Lakukan:**
+
 1. ✅ Buat folder page baru
 2. ✅ Buat file `index.tsx`
 3. ✅ Export di `pages/admin/index.ts` (optional tapi recommended)
@@ -301,6 +316,7 @@ export const adminRoutes = [
 ## 🔥 **Keuntungan System Ini:**
 
 ### **Sebelum (Manual):**
+
 ```tsx
 // SETIAP kali tambah page, edit AppRoutes.tsx:
 
@@ -318,12 +334,15 @@ import YetAnotherPage from '@/pages/admin/YetAnotherPage';
 ```
 
 ### **Sesudah (Auto):**
+
 ```tsx
 // Setup SEKALI, tidak perlu edit lagi:
 
-{adminRoutes.map(route => (
-  <Route key={route.path} path={route.path} element={route.element} />
-))}
+{
+  adminRoutes.map((route) => (
+    <Route key={route.path} path={route.path} element={route.element} />
+  ));
+}
 
 // Tambah 100 pages? Still just this one line! 🚀
 ```
@@ -350,11 +369,13 @@ Number of Pages | Manual Effort | Auto Effort
 ### **Route baru masuk ke:**
 
 1. **Primary:** `src/routes/generated-routes.tsx` (AUTO-GENERATED)
+
    - Import statements
    - Route configurations
    - Export sebagai `adminRoutes` array
 
 2. **Secondary:** `src/routes/AppRoutes.tsx` (STATIC - tidak perlu edit)
+
    - Menggunakan `adminRoutes` via map function
    - Render semua routes dinamis
 

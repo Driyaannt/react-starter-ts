@@ -1,6 +1,7 @@
 # 🧪 Test: Auto-Detection Rules
 
 ## ❓ **Pertanyaan:**
+
 > "Apakah jika saya membuat folder dan file testing.tsx akan otomatis menambahkan routes?"
 
 ## ❌ **Jawaban: TIDAK**
@@ -24,6 +25,7 @@ src/pages/admin/
 ### ❌ **Yang TIDAK Akan Ter-Detect:**
 
 #### **1. File name bukan `index.tsx`**
+
 ```
 src/pages/admin/
   └─ Testing/
@@ -34,12 +36,14 @@ src/pages/admin/
 ```
 
 #### **2. File standalone (tidak di folder)**
+
 ```
 src/pages/admin/
   └─ testing.tsx           ← ❌ Tidak detect!
 ```
 
 #### **3. File di lokasi salah**
+
 ```
 src/components/
   └─ Testing/
@@ -57,11 +61,11 @@ src/pages/
 ```javascript
 // scripts/vite-plugin-auto-routes.js (line 39)
 
-const indexPath = path.join(folderPath, 'index.tsx');
-if (fs.existsSync(indexPath)) {  
+const indexPath = path.join(folderPath, "index.tsx");
+if (fs.existsSync(indexPath)) {
   // ↑ HANYA cek file bernama "index.tsx"
   // File lain tidak akan di-detect!
-  
+
   const routePath = folderNameToPath(folder);
   imports.push(`import ${folder} from "@/pages/admin/${folder}";`);
   adminRoutes.push(`  { path: "${routePath}", element: <${folder} /> }`);
@@ -77,12 +81,14 @@ if (fs.existsSync(indexPath)) {
 ### **Test 1: File Name Salah ❌**
 
 **Structure:**
+
 ```
 src/pages/admin/TestingWrong/
   └─ testing.tsx          ← ❌ Nama salah!
 ```
 
 **Result:**
+
 ```bash
 # Check generated-routes.tsx
 # TestingWrong TIDAK ada dalam list!
@@ -100,12 +106,14 @@ adminRoutes = [
 ### **Test 2: File Name Benar ✅**
 
 **Structure:**
+
 ```
 src/pages/admin/TestingCorrect/
   └─ index.tsx            ← ✅ Nama benar!
 ```
 
 **Result:**
+
 ```bash
 # Check generated-routes.tsx
 # TestingCorrect ADA dalam list!
@@ -124,15 +132,15 @@ adminRoutes = [
 
 ## 📊 **Comparison Table:**
 
-| Location | File Name | Detected? | Route |
-|----------|-----------|-----------|-------|
-| `admin/Testing/` | `index.tsx` | ✅ YES | `/admin/testing` |
-| `admin/Testing/` | `testing.tsx` | ❌ NO | - |
-| `admin/Testing/` | `component.tsx` | ❌ NO | - |
-| `admin/Testing/` | `page.tsx` | ❌ NO | - |
-| `admin/` | `testing.tsx` | ❌ NO | - |
-| `user/Testing/` | `index.tsx` | ✅ YES | `/testing` |
-| `components/Testing/` | `index.tsx` | ❌ NO | - |
+| Location              | File Name       | Detected? | Route            |
+| --------------------- | --------------- | --------- | ---------------- |
+| `admin/Testing/`      | `index.tsx`     | ✅ YES    | `/admin/testing` |
+| `admin/Testing/`      | `testing.tsx`   | ❌ NO     | -                |
+| `admin/Testing/`      | `component.tsx` | ❌ NO     | -                |
+| `admin/Testing/`      | `page.tsx`      | ❌ NO     | -                |
+| `admin/`              | `testing.tsx`   | ❌ NO     | -                |
+| `user/Testing/`       | `index.tsx`     | ✅ YES    | `/testing`       |
+| `components/Testing/` | `index.tsx`     | ❌ NO     | -                |
 
 ---
 
@@ -173,6 +181,7 @@ src/pages/admin/
 ```
 
 **Key Points:**
+
 1. **HANYA** `index.tsx` yang akan di-scan untuk routing
 2. File lain (`UserTable.tsx`, dll) boleh ada untuk sub-components
 3. Nama folder = nama component (untuk consistency)
@@ -189,23 +198,25 @@ Edit `scripts/vite-plugin-auto-routes.js`:
 
 ```javascript
 // Ubah dari:
-const indexPath = path.join(folderPath, 'index.tsx');
+const indexPath = path.join(folderPath, "index.tsx");
 
 // Menjadi (support multiple names):
-const possibleNames = ['index.tsx', 'page.tsx', 'component.tsx'];
+const possibleNames = ["index.tsx", "page.tsx", "component.tsx"];
 const indexPath = possibleNames
-  .map(name => path.join(folderPath, name))
-  .find(p => fs.existsSync(p));
+  .map((name) => path.join(folderPath, name))
+  .find((p) => fs.existsSync(p));
 ```
 
 ### **Option 2: Tetap Gunakan `index.tsx` (Recommended!)**
 
 Ini adalah **standard convention** di:
+
 - Next.js → `pages/about/index.tsx`
 - Remix → `routes/about/index.tsx`
 - React Router → Best practice pattern
 
 **Keuntungan:**
+
 - ✅ Consistency dengan framework lain
 - ✅ Mudah dipahami team
 - ✅ Auto-import di IDE
@@ -222,6 +233,7 @@ Ini adalah **standard convention** di:
 **A:** ❌ **TIDAK!** Harus `index.tsx`
 
 **Correct Way:**
+
 ```bash
 # 1. Buat folder
 mkdir src/pages/admin/Testing
@@ -250,6 +262,7 @@ export { default as Testing } from "./Testing";
 **File name HARUS `index.tsx` - tidak ada exception!**
 
 Ini adalah **design decision** untuk:
+
 - ✅ Consistency
 - ✅ Convention over configuration
 - ✅ Easy to understand

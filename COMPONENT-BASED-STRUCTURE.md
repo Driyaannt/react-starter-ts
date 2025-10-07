@@ -55,7 +55,9 @@ src/pages/
 ## ✨ Keuntungan Struktur Component-Based
 
 ### 1. **Modular dan Scalable**
+
 Setiap page memiliki foldernya sendiri, memudahkan untuk menambahkan file terkait:
+
 ```
 ProductsPage/
 ├── index.tsx              # Component utama
@@ -68,20 +70,25 @@ ProductsPage/
 ```
 
 ### 2. **Import yang Tetap Clean**
+
 Meskipun struktur folder berubah, cara import tetap sama:
+
 ```typescript
 // Import masih sama seperti sebelumnya
-import { Login, Dashboard } from './pages/admin';
-import { UserLandingPage, BookingPage } from './pages/user';
+import { Login, Dashboard } from "./pages/admin";
+import { UserLandingPage, BookingPage } from "./pages/user";
 ```
 
 ### 3. **Easy to Find & Navigate**
+
 - Semua file terkait satu page ada di satu folder
 - Mudah mencari dan memodifikasi
 - Clear separation of concerns
 
 ### 4. **Future-Proof**
+
 Struktur ini memudahkan untuk:
+
 - ✅ Menambahkan tests untuk setiap page
 - ✅ Menambahkan custom hooks
 - ✅ Menambahkan styles khusus
@@ -91,10 +98,11 @@ Struktur ini memudahkan untuk:
 ## 📝 Contoh Penggunaan
 
 ### Import Sama Seperti Sebelumnya
+
 ```typescript
 // Di App.tsx
-import { Login, Dashboard } from './pages/admin';
-import { UserLandingPage, BookingPage } from './pages/user';
+import { Login, Dashboard } from "./pages/admin";
+import { UserLandingPage, BookingPage } from "./pages/user";
 
 // Di AppRoutes.tsx
 import {
@@ -106,13 +114,15 @@ import {
   AnalyticsPage,
   TransactionsPage,
   SettingsPage,
-} from '@/pages/admin';
+} from "@/pages/admin";
 ```
 
 ### Ekspansi di Masa Depan
+
 Jika ingin menambahkan file terkait:
 
 **Contoh: ProductsPage dengan tests dan hooks**
+
 ```
 ProductsPage/
 ├── index.tsx                    # Main component
@@ -129,37 +139,45 @@ ProductsPage/
 ```
 
 **Import tetap simple:**
+
 ```typescript
-import { ProductsPage } from '@/pages/admin';
+import { ProductsPage } from "@/pages/admin";
 ```
 
 ## 🎨 Best Practices
 
 ### 1. **Nama Folder = Nama Component**
+
 - Folder: `Dashboard/`
 - File: `Dashboard/index.tsx`
 - Export: `export default Dashboard`
 
 ### 2. **Gunakan index.tsx**
+
 Menggunakan `index.tsx` memungkinkan import yang clean:
+
 ```typescript
 // ✅ Good
-import Dashboard from './Dashboard';
+import Dashboard from "./Dashboard";
 
 // ❌ Avoid
-import Dashboard from './Dashboard/Dashboard';
+import Dashboard from "./Dashboard/Dashboard";
 ```
 
 ### 3. **Barrel Exports**
+
 Tetap gunakan barrel exports di `index.ts`:
+
 ```typescript
 // pages/admin/index.ts
-export { default as Dashboard } from './Dashboard';
-export { default as Login } from './Login';
+export { default as Dashboard } from "./Dashboard";
+export { default as Login } from "./Login";
 ```
 
 ### 4. **Future Structure**
+
 Saat page bertumbuh, tambahkan file terkait dalam folder yang sama:
+
 ```
 Dashboard/
 ├── index.tsx              # Main component ✅
@@ -173,6 +191,7 @@ Dashboard/
 ## 📊 Struktur Saat Ini
 
 ### Admin Pages (10 pages)
+
 - ✅ Login
 - ✅ Dashboard
 - ✅ UserManagement
@@ -185,26 +204,29 @@ Dashboard/
 - ✅ ProfileSettings
 
 ### User Pages (2 pages)
+
 - ✅ UserLandingPage
 - ✅ BookingPage
 
 ### Shared Pages
+
 - ✅ NotFoundPage
 
 ## 🚀 Benefits Summary
 
-| Aspek | Sebelum | Sesudah |
-|-------|---------|---------|
-| **Organization** | Flat structure | Component-based folders |
-| **Scalability** | Limited | Excellent |
-| **Maintainability** | Good | Excellent |
-| **Testing** | Scattered | Co-located |
-| **Related Files** | Mixed | Grouped |
-| **Navigation** | Search files | Navigate folders |
+| Aspek               | Sebelum        | Sesudah                 |
+| ------------------- | -------------- | ----------------------- |
+| **Organization**    | Flat structure | Component-based folders |
+| **Scalability**     | Limited        | Excellent               |
+| **Maintainability** | Good           | Excellent               |
+| **Testing**         | Scattered      | Co-located              |
+| **Related Files**   | Mixed          | Grouped                 |
+| **Navigation**      | Search files   | Navigate folders        |
 
 ## ✅ Testing
 
 Struktur baru sudah ditest dan berfungsi dengan baik:
+
 - ✅ All imports working correctly
 - ✅ No breaking changes
 - ✅ Development server running
@@ -216,6 +238,7 @@ Struktur baru sudah ditest dan berfungsi dengan baik:
 🎉 **Struktur folder pages sekarang lebih modular, scalable, dan mudah di-maintain!**
 
 Struktur ini mengikuti best practices dari:
+
 - React component organization
 - Feature-based architecture
 - Atomic design principles

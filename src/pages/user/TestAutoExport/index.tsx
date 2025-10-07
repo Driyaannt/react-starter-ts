@@ -20,7 +20,8 @@ const TestAutoExport = () => {
                 Auto Export
               </h3>
               <p className="text-green-700">
-                Export automatically added to<br/>
+                Export automatically added to
+                <br />
                 <code className="bg-green-200 px-2 py-1 rounded text-sm">
                   pages/user/index.ts
                 </code>
@@ -33,7 +34,8 @@ const TestAutoExport = () => {
                 Auto Route
               </h3>
               <p className="text-blue-700">
-                Route created at<br/>
+                Route created at
+                <br />
                 <code className="bg-blue-200 px-2 py-1 rounded text-sm">
                   /test-auto-export
                 </code>
@@ -74,38 +76,47 @@ const TestAutoExport = () => {
               <div className="flex items-start text-purple-800">
                 <span className="text-green-500 text-xl mr-3">✓</span>
                 <div>
-                  Detected new folder <code className="bg-purple-100 px-2 py-1 rounded">TestAutoExport/</code>
+                  Detected new folder{" "}
+                  <code className="bg-purple-100 px-2 py-1 rounded">
+                    TestAutoExport/
+                  </code>
                 </div>
               </div>
               <div className="flex items-start text-purple-800">
                 <span className="text-green-500 text-xl mr-3">✓</span>
                 <div>
-                  Found <code className="bg-purple-100 px-2 py-1 rounded">index.tsx</code> file
+                  Found{" "}
+                  <code className="bg-purple-100 px-2 py-1 rounded">
+                    index.tsx
+                  </code>{" "}
+                  file
                 </div>
               </div>
               <div className="flex items-start text-purple-800">
                 <span className="text-green-500 text-xl mr-3">✓</span>
                 <div>
-                  Added export to <code className="bg-purple-100 px-2 py-1 rounded">pages/user/index.ts</code>
+                  Added export to{" "}
+                  <code className="bg-purple-100 px-2 py-1 rounded">
+                    pages/user/index.ts
+                  </code>
                 </div>
               </div>
               <div className="flex items-start text-purple-800">
                 <span className="text-green-500 text-xl mr-3">✓</span>
                 <div>
-                  Generated route config with path <code className="bg-purple-100 px-2 py-1 rounded">/test-auto-export</code>
+                  Generated route config with path{" "}
+                  <code className="bg-purple-100 px-2 py-1 rounded">
+                    /test-auto-export
+                  </code>
                 </div>
               </div>
               <div className="flex items-start text-purple-800">
                 <span className="text-green-500 text-xl mr-3">✓</span>
-                <div>
-                  Triggered Hot Module Replacement
-                </div>
+                <div>Triggered Hot Module Replacement</div>
               </div>
               <div className="flex items-start text-purple-800">
                 <span className="text-green-500 text-xl mr-3">✓</span>
-                <div>
-                  Browser auto-refreshed with new route
-                </div>
+                <div>Browser auto-refreshed with new route</div>
               </div>
             </div>
           </div>
@@ -115,9 +126,7 @@ const TestAutoExport = () => {
               <span className="mr-2">🎊</span>
               TRUE ZERO-CONFIG!
             </h3>
-            <p className="text-gray-800 mb-3 font-semibold">
-              No need to:
-            </p>
+            <p className="text-gray-800 mb-3 font-semibold">No need to:</p>
             <div className="grid md:grid-cols-2 gap-2 text-gray-700">
               <div className="flex items-center">
                 <span className="text-red-500 mr-2">✗</span>
@@ -155,7 +164,10 @@ const TestAutoExport = () => {
             This is a <strong>User Page</strong> - accessible at root level
           </p>
           <p className="text-sm mt-2">
-            URL: <code className="bg-gray-200 px-3 py-1 rounded">http://localhost:5175/test-auto-export</code>
+            URL:{" "}
+            <code className="bg-gray-200 px-3 py-1 rounded">
+              http://localhost:5175/test-auto-export
+            </code>
           </p>
         </div>
       </div>

@@ -34,8 +34,16 @@ const Inventory = () => {
         <div className="bg-white rounded-lg shadow p-6">
           <h3 className="text-xl font-semibold mb-4">How it works:</h3>
           <ol className="list-decimal list-inside space-y-2 text-gray-700">
-            <li>Created folder: <code className="bg-gray-100 px-2 py-1 rounded">src/pages/admin/Inventory/</code></li>
-            <li>Created file: <code className="bg-gray-100 px-2 py-1 rounded">index.tsx</code></li>
+            <li>
+              Created folder:{" "}
+              <code className="bg-gray-100 px-2 py-1 rounded">
+                src/pages/admin/Inventory/
+              </code>
+            </li>
+            <li>
+              Created file:{" "}
+              <code className="bg-gray-100 px-2 py-1 rounded">index.tsx</code>
+            </li>
             <li>Plugin detected new file automatically</li>
             <li>Route generated and added to routing system</li>
             <li>No terminal commands needed! 🚀</li>
@@ -44,7 +52,8 @@ const Inventory = () => {
 
         <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded">
           <p className="text-blue-800">
-            <strong>💡 Tip:</strong> Check your console to see the auto-detection message!
+            <strong>💡 Tip:</strong> Check your console to see the
+            auto-detection message!
           </p>
         </div>
       </div>

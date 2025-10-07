@@ -26,8 +26,9 @@ imports.push(`import ${folder} from "@/pages/admin/${folder}";`);
 ```
 
 **Generated code dengan folder `testing`:**
+
 ```tsx
-import testing from "@/pages/admin/testing";  // ❌ INVALID!
+import testing from "@/pages/admin/testing"; // ❌ INVALID!
 //     ^^^^^^^
 //     Component name harus PascalCase, bukan lowercase!
 ```
@@ -35,6 +36,7 @@ import testing from "@/pages/admin/testing";  // ❌ INVALID!
 ### **3. React Component Naming Rules**
 
 React component names **HARUS dimulai dengan huruf kapital**:
+
 - ✅ `<Testing />` - Valid
 - ❌ `<testing />` - Invalid (dianggap HTML element)
 
@@ -52,13 +54,14 @@ src/pages/admin/
 ```
 
 **Generated code yang valid:**
+
 ```tsx
-import Testing from "@/pages/admin/Testing";  // ✅ VALID!
+import Testing from "@/pages/admin/Testing"; // ✅ VALID!
 //     ^^^^^^^
 //     PascalCase - valid React component name!
 
 export const adminRoutes = [
-  { path: "testing", element: <Testing /> }  // ✅ Works!
+  { path: "testing", element: <Testing /> }, // ✅ Works!
 ];
 ```
 
@@ -66,20 +69,21 @@ export const adminRoutes = [
 
 ## 📊 **Naming Convention Rules:**
 
-| Folder Name | Component Name | Valid? | Route Path | Reason |
-|-------------|----------------|--------|------------|---------|
-| `Testing` | `Testing` | ✅ YES | `/admin/testing` | PascalCase → valid component |
-| `TestingPage` | `TestingPage` | ✅ YES | `/admin/testing` | PascalCase → valid component |
-| `MyNewPage` | `MyNewPage` | ✅ YES | `/admin/my-new-page` | PascalCase → valid component |
-| `testing` | `testing` | ❌ NO | - | lowercase → invalid component |
-| `my-page` | `my-page` | ❌ NO | - | kebab-case → invalid component |
-| `my_page` | `my_page` | ❌ NO | - | snake_case → invalid component |
+| Folder Name   | Component Name | Valid? | Route Path           | Reason                         |
+| ------------- | -------------- | ------ | -------------------- | ------------------------------ |
+| `Testing`     | `Testing`      | ✅ YES | `/admin/testing`     | PascalCase → valid component   |
+| `TestingPage` | `TestingPage`  | ✅ YES | `/admin/testing`     | PascalCase → valid component   |
+| `MyNewPage`   | `MyNewPage`    | ✅ YES | `/admin/my-new-page` | PascalCase → valid component   |
+| `testing`     | `testing`      | ❌ NO  | -                    | lowercase → invalid component  |
+| `my-page`     | `my-page`      | ❌ NO  | -                    | kebab-case → invalid component |
+| `my_page`     | `my_page`      | ❌ NO  | -                    | snake_case → invalid component |
 
 ---
 
 ## 🎯 **Solution Timeline:**
 
 ### **Problem:**
+
 ```bash
 # Anda buat:
 mkdir src/pages/admin/testing  # ← Lowercase
@@ -89,6 +93,7 @@ echo "..." > src/pages/admin/testing/index.tsx
 ```
 
 ### **Solution:**
+
 ```bash
 # Rename atau buat ulang:
 mkdir src/pages/admin/Testing  # ← PascalCase!
@@ -108,6 +113,7 @@ npm run dev
 ## 📝 **What Happened in Your Case:**
 
 ### **1. Initial State:**
+
 ```
 Folder created: src/pages/admin/testing/  (lowercase)
 File created: src/pages/admin/testing/index.tsx (empty file)
@@ -115,10 +121,12 @@ Result: ❌ Not detected
 ```
 
 ### **2. Problems:**
+
 - ❌ Folder name lowercase → Invalid component name
 - ❌ File was empty → No valid component
 
 ### **3. Solution Applied:**
+
 ```
 1. Created new folder: TestingPage/ (PascalCase)
 2. Added proper component with export
@@ -128,13 +136,14 @@ Result: ❌ Not detected
 ```
 
 ### **4. Final Result:**
+
 ```tsx
 // generated-routes.tsx (line 17 & 42):
-import TestingPage from "@/pages/admin/TestingPage";  // ✅ Added!
+import TestingPage from "@/pages/admin/TestingPage"; // ✅ Added!
 
 export const adminRoutes = [
   // ...
-  { path: "testing", element: <TestingPage /> },      // ✅ Route available!
+  { path: "testing", element: <TestingPage /> }, // ✅ Route available!
 ];
 ```
 
@@ -204,6 +213,7 @@ mkdir src/pages/admin/products_page    # ❌
 ## 🎓 **Why PascalCase?**
 
 ### **1. React Convention:**
+
 ```tsx
 // Valid:
 function MyComponent() { }
@@ -217,12 +227,14 @@ const mycomponent = () => { };
 ```
 
 ### **2. Industry Standard:**
+
 - **Next.js:** Uses PascalCase for page components
 - **Remix:** Uses PascalCase for route components
 - **React Router:** Best practice is PascalCase
 - **All React frameworks:** Follow this convention
 
 ### **3. Clarity & Readability:**
+
 ```
 PascalCase clearly indicates:
 - This is a React Component (not a function/variable)
@@ -246,6 +258,7 @@ Jika folder tidak ter-detect, check:
 - [ ] ✅ Exported in `pages/admin/index.ts`? (optional tapi recommended)
 
 Jika SEMUA ✅ tapi masih tidak detect:
+
 1. Restart dev server
 2. Check console untuk errors
 3. Check `generated-routes.tsx` apakah file ter-update
@@ -256,6 +269,7 @@ Jika SEMUA ✅ tapi masih tidak detect:
 ## 📊 **Summary:**
 
 ### **Problem:**
+
 ```
 Folder: testing/  (lowercase)
 → Component name: testing  (invalid)
@@ -263,6 +277,7 @@ Folder: testing/  (lowercase)
 ```
 
 ### **Solution:**
+
 ```
 Folder: Testing/ atau TestingPage/  (PascalCase)
 → Component name: Testing atau TestingPage  (valid)
@@ -270,6 +285,7 @@ Folder: Testing/ atau TestingPage/  (PascalCase)
 ```
 
 ### **Key Rule:**
+
 ```
 📌 FOLDER NAME = COMPONENT NAME
    Therefore, folder MUST be PascalCase!

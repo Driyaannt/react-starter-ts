@@ -5,12 +5,14 @@ Sistem otomatis yang menghasilkan routes dan template page secara real-time keti
 ## ✨ Fitur
 
 ### 1. **Auto-Route Generation**
+
 - 🔄 Otomatis detect folder baru di `src/pages/admin/` dan `src/pages/user/`
 - 📝 Generate route configuration di `src/routes/generated-routes.tsx`
 - 🎯 Generate `GENERATED_PATHS` constants untuk type-safe routing
 - 📦 Auto-generate barrel exports di `index.ts` files
 
 ### 2. **Auto-Template Creation**
+
 - ✨ Otomatis create `index.tsx` dengan boilerplate code
 - 🎨 Pre-configured dengan shadcn/ui components
 - 🌓 Dark mode support built-in
@@ -18,6 +20,7 @@ Sistem otomatis yang menghasilkan routes dan template page secara real-time keti
 - 💪 TypeScript typing included
 
 ### 3. **Real-Time Detection**
+
 - 👀 File watcher monitoring perubahan
 - 🔍 Polling fallback setiap 2 detik
 - ⚡ Debounced regeneration (150ms)
@@ -44,6 +47,7 @@ npm run dev
 ```
 
 Sistem akan otomatis:
+
 1. ✅ Detect folder `MyNewFeature`
 2. ✅ Create `index.tsx` dengan template lengkap
 3. ✅ Generate route: `/admin/my-new-feature`
@@ -66,14 +70,15 @@ Sistem akan detect dan auto-generate routes tanpa overwrite file Anda.
 
 Nama folder akan dikonversi ke route path dengan aturan:
 
-| Folder Name | Route Path | Component Name | Constant Name |
-|------------|------------|----------------|---------------|
-| `Dashboard` | `dashboard` | `Dashboard` | `DASHBOARD` |
+| Folder Name      | Route Path        | Component Name   | Constant Name     |
+| ---------------- | ----------------- | ---------------- | ----------------- |
+| `Dashboard`      | `dashboard`       | `Dashboard`      | `DASHBOARD`       |
 | `UserManagement` | `user-management` | `UserManagement` | `USER_MANAGEMENT` |
-| `ProductsPage` | `products` | `ProductsPage` | `PRODUCTS_PAGE` |
-| `OrderHistory` | `order-history` | `OrderHistory` | `ORDER_HISTORY` |
+| `ProductsPage`   | `products`        | `ProductsPage`   | `PRODUCTS_PAGE`   |
+| `OrderHistory`   | `order-history`   | `OrderHistory`   | `ORDER_HISTORY`   |
 
 ### Aturan Konversi:
+
 1. **PascalCase → kebab-case**: `UserManagement` → `user-management`
 2. **Remove suffix "Page"**: `ProductsPage` → `products`
 3. **All lowercase**: `API` → `api`
@@ -83,7 +88,7 @@ Nama folder akan dikonversi ke route path dengan aturan:
 Setiap page yang auto-generated memiliki struktur:
 
 ```tsx
-import React from 'react';
+import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -104,9 +109,7 @@ const MyNewFeature: React.FC = () => {
         <CardHeader>
           <CardTitle>Content Area</CardTitle>
         </CardHeader>
-        <CardContent>
-          {/* Your content here */}
-        </CardContent>
+        <CardContent>{/* Your content here */}</CardContent>
       </Card>
     </div>
   );
@@ -122,7 +125,7 @@ export default MyNewFeature;
 ```tsx
 // Auto-generated route configuration
 export const adminRoutes: RouteConfig[] = [
-  { path: "my-new-feature", element: <MyNewFeature /> }
+  { path: "my-new-feature", element: <MyNewFeature /> },
 ];
 
 export const GENERATED_PATHS = {
@@ -150,16 +153,16 @@ Plugin configuration di `scripts/vite-plugin-auto-routes.js`:
 export default function autoRoutesPlugin() {
   return {
     name: 'vite-plugin-auto-routes',
-    
+
     configResolved() {
       // Auto-scan on startup
       generateRoutes(true); // true = create templates
     },
-    
+
     configureServer(server) {
       // Watch for changes
       server.watcher.on('addDir', ...);
-      
+
       // Polling fallback every 2 seconds
       setInterval(checkForChanges, 2000);
     }
@@ -188,6 +191,7 @@ Sistem menggunakan 3 layer detection:
 3. **Polling Fallback** - Check every 2 seconds for missed changes
 
 ### Supported Events:
+
 - ✅ `addDir` - New folder created
 - ✅ `add` - New file added
 - ✅ `unlink` - File deleted
@@ -215,11 +219,7 @@ import { GENERATED_PATHS } from "@/routes/generated-routes";
 import { Link } from "react-router-dom";
 
 function Navigation() {
-  return (
-    <Link to={GENERATED_PATHS.MY_NEW_FEATURE}>
-      Go to My Feature
-    </Link>
-  );
+  return <Link to={GENERATED_PATHS.MY_NEW_FEATURE}>Go to My Feature</Link>;
 }
 ```
 
@@ -232,7 +232,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/admin" element={<AdminLayout />}>
-        {adminRoutes.map(route => (
+        {adminRoutes.map((route) => (
           <Route key={route.path} {...route} />
         ))}
       </Route>
@@ -244,7 +244,9 @@ function AppRoutes() {
 ## 🔥 Hot Tips
 
 ### 1. Restart Untuk Trigger Template
+
 Jika folder baru tidak auto-detect template:
+
 ```bash
 # Restart dev server
 Ctrl+C
@@ -252,7 +254,9 @@ npm run dev
 ```
 
 ### 2. Type-Safe Routing
+
 Gunakan `GENERATED_PATHS` untuk type safety:
+
 ```typescript
 // ❌ Bad - hardcoded string
 navigate("/admin/my-feature");
@@ -262,6 +266,7 @@ navigate(GENERATED_PATHS.MY_FEATURE);
 ```
 
 ### 3. Organize by Feature
+
 ```
 src/pages/admin/
   ├── UserManagement/     # user-management route
@@ -270,20 +275,24 @@ src/pages/admin/
 ```
 
 ### 4. Clean Up Empty Folders
+
 Delete folder → route auto-removed on next regeneration.
 
 ## ⚠️ Important Notes
 
 1. **Don't Edit Generated Files**
+
    - `src/routes/generated-routes.tsx` - ⚠️ AUTO-GENERATED
    - `src/pages/admin/index.ts` - ⚠️ AUTO-GENERATED
    - `src/pages/user/index.ts` - ⚠️ AUTO-GENERATED
 
 2. **Page Components Are Safe**
+
    - `src/pages/admin/MyFeature/index.tsx` - ✅ Edit freely
    - Template only created if file doesn't exist
 
 3. **Restart When Needed**
+
    - File watcher may miss some events
    - Restart dev server to force regeneration
 
@@ -296,6 +305,7 @@ Delete folder → route auto-removed on next regeneration.
 ### Template Not Created?
 
 **Solution:** Restart dev server
+
 ```bash
 npm run dev
 ```
@@ -303,6 +313,7 @@ npm run dev
 ### Route Not Showing?
 
 **Check:**
+
 1. ✅ Folder has `index.tsx` file
 2. ✅ Component is exported as default
 3. ✅ Folder is in `pages/admin/` or `pages/user/`
@@ -311,6 +322,7 @@ npm run dev
 ### Generated Paths Not Updated?
 
 **Check:**
+
 1. ✅ Look at console for "Routes regenerated" message
 2. ✅ Check `generated-routes.tsx` has your path
 3. ✅ Restart TypeScript server in VS Code
@@ -380,4 +392,4 @@ npm run dev
 
 **Happy Coding! 🎉**
 
-*Sistem ini menghemat waktu development dengan automasi routing dan template creation.*
+_Sistem ini menghemat waktu development dengan automasi routing dan template creation._

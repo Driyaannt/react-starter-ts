@@ -9,6 +9,7 @@ Sistem ini **otomatis membuat routes** untuk semua pages baru yang Anda buat, **
 ## ✨ Cara Kerja (Simple Explanation)
 
 ### **Traditional Way (Dulu):**
+
 ```tsx
 // 1. Buat component
 const NewPage = () => <div>New Page</div>;
@@ -24,6 +25,7 @@ npm run dev
 ```
 
 ### **Auto-Route Way (Sekarang):**
+
 ```tsx
 // 1. Buat folder & file
 mkdir src/pages/admin/NewPage
@@ -79,11 +81,13 @@ export { default as MyNewPage } from "./MyNewPage";
 ### **Langkah 4: DONE! ✅**
 
 **Route otomatis tersedia:**
+
 - URL: `http://localhost:5173/admin/my-new-page`
 - Tidak perlu restart server
 - Tidak perlu edit routing manual
 
 **Check console:**
+
 ```
 📄 [Auto Routes] New page detected: MyNewPage
 ✅ [Auto Routes] Routes regenerated successfully!
@@ -94,21 +98,25 @@ export { default as MyNewPage } from "./MyNewPage";
 ## 🔥 Fitur Plugin
 
 ### ✅ **Auto-Detection**
+
 - Deteksi file baru (`.tsx` di folder pages)
 - Deteksi file dihapus
 - Deteksi folder baru dengan `index.tsx`
 
 ### ✅ **Auto-Generation**
+
 - Generate import statements
 - Generate route configs
 - Update `generated-routes.tsx` otomatis
 
 ### ✅ **Hot Module Replacement (HMR)**
+
 - Browser auto-refresh saat route berubah
 - Tidak perlu restart server
 - State preservation (jika memungkinkan)
 
 ### ✅ **Smart Naming**
+
 - Convert PascalCase → kebab-case
 - Remove "Page" suffix dari URL
 - Clean route paths
@@ -119,15 +127,16 @@ export { default as MyNewPage } from "./MyNewPage";
 
 Plugin convert nama folder ke URL route:
 
-| Folder Name | Component | Route URL |
-|-------------|-----------|-----------|
-| `Dashboard` | Dashboard | `/admin/dashboard` |
-| `Users` | Users | `/admin/users` |
-| `ProductsPage` | ProductsPage | `/admin/products` |
+| Folder Name      | Component      | Route URL                |
+| ---------------- | -------------- | ------------------------ |
+| `Dashboard`      | Dashboard      | `/admin/dashboard`       |
+| `Users`          | Users          | `/admin/users`           |
+| `ProductsPage`   | ProductsPage   | `/admin/products`        |
 | `UserManagement` | UserManagement | `/admin/user-management` |
-| `MyNewPage` | MyNewPage | `/admin/my-new-page` |
+| `MyNewPage`      | MyNewPage      | `/admin/my-new-page`     |
 
 **Rules:**
+
 1. PascalCase → kebab-case
 2. "Page" suffix dihapus dari URL (tapi tetap di component name)
 3. Multiple words: `UserManagement` → `user-management`
@@ -244,16 +253,12 @@ const AppRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="dashboard" />} />
-      
+
       {/* 🚀 Auto-generated routes */}
       {adminRoutes.map((route) => (
-        <Route 
-          key={route.path} 
-          path={route.path} 
-          element={route.element} 
-        />
+        <Route key={route.path} path={route.path} element={route.element} />
       ))}
-      
+
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
@@ -261,6 +266,7 @@ const AppRoutes: React.FC = () => {
 ```
 
 **Keuntungan:**
+
 - ✅ Satu loop untuk semua routes
 - ✅ Tidak perlu edit manual saat tambah page
 - ✅ Type-safe dengan TypeScript
@@ -273,13 +279,16 @@ const AppRoutes: React.FC = () => {
 ### **Problem: Routes tidak update**
 
 **Solution:**
+
 1. Check terminal - pastikan plugin running:
+
    ```
    🚀 [Auto Routes Plugin] Activated
    👀 [Auto Routes] Watching for changes...
    ```
 
 2. Check file structure:
+
    ```
    ✅ src/pages/admin/MyPage/index.tsx
    ❌ src/pages/admin/MyPage.tsx
@@ -295,8 +304,10 @@ const AppRoutes: React.FC = () => {
 ### **Problem: Route 404**
 
 **Solution:**
+
 1. Check generated-routes.tsx - apakah route ada di list?
 2. Check URL format:
+
    ```
    ✅ http://localhost:5173/admin/my-page
    ❌ http://localhost:5173/my-page
@@ -311,6 +322,7 @@ const AppRoutes: React.FC = () => {
 ### **Problem: Console tidak show detection**
 
 **Solution:**
+
 1. Plugin mungkin belum load - restart server
 2. File watcher mungkin miss - touch file lagi (save ulang)
 3. Check file location - harus di dalam pages/admin atau pages/user
@@ -357,18 +369,21 @@ src/components/MyPage/ ❌
 ## 🎉 Benefits
 
 ### **Developer Experience:**
+
 - ⚡ Faster development
 - 🧠 Less mental overhead
 - ✨ Zero configuration
 - 🔥 Hot reload built-in
 
 ### **Code Quality:**
+
 - 📦 Better organization
 - 🎯 Consistent structure
 - 🛡️ Type-safe routes
 - 📚 Self-documenting
 
 ### **Scalability:**
+
 - 🚀 Easy to add 100+ pages
 - 🔄 No routing bottleneck
 - 🎨 Focus on features, not config
@@ -378,26 +393,28 @@ src/components/MyPage/ ❌
 
 ## 📈 Comparison
 
-| Feature | Manual | Auto-Route |
-|---------|--------|------------|
-| Add new page | 5-10 min | 30 seconds |
-| Edit routing | Manual | Automatic |
-| Typo risk | High | Zero |
-| Scalability | Hard | Easy |
-| HMR | Sometimes | Always |
-| Team onboarding | Complex | Simple |
+| Feature         | Manual    | Auto-Route |
+| --------------- | --------- | ---------- |
+| Add new page    | 5-10 min  | 30 seconds |
+| Edit routing    | Manual    | Automatic  |
+| Typo risk       | High      | Zero       |
+| Scalability     | Hard      | Easy       |
+| HMR             | Sometimes | Always     |
+| Team onboarding | Complex   | Simple     |
 
 ---
 
 ## 🌟 Success Metrics
 
 **Before:**
+
 - ⏱️ 5-10 minutes per new page (with routing setup)
 - 🐛 Frequent routing bugs
 - 📝 100+ lines of manual route config
 - 😤 Frustrated developers
 
 **After:**
+
 - ⚡ 30 seconds per new page
 - ✅ Zero routing bugs
 - 📝 5 lines of route config (map function)
@@ -408,12 +425,14 @@ src/components/MyPage/ ❌
 ## 🎓 Learning Resources
 
 ### **Files to Study:**
+
 1. `scripts/vite-plugin-auto-routes.js` - Plugin logic
 2. `src/routes/generated-routes.tsx` - Generated output
 3. `src/routes/AppRoutes.tsx` - Usage example
 4. `vite.config.ts` - Plugin activation
 
 ### **Concepts:**
+
 - Vite Plugin API
 - File System Watching
 - Hot Module Replacement (HMR)

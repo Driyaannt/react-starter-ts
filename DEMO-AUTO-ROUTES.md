@@ -3,6 +3,7 @@
 ## ✅ Sistem Sudah Aktif!
 
 Lihat output terminal:
+
 ```
 🚀 [Auto Routes Plugin] Activated
 ✅ [Auto Routes] Routes regenerated successfully!
@@ -14,12 +15,14 @@ Lihat output terminal:
 ## 🧪 Test yang Sudah Dilakukan:
 
 ### 1. **Page "Customers"** ✅
+
 - ✅ File created: `src/pages/admin/Customers/index.tsx`
 - ✅ Auto-detected oleh plugin
 - ✅ Route generated: `/admin/customers`
 - ✅ Bisa diakses di browser!
 
-### 2. **Page "Inventory"** ✅  
+### 2. **Page "Inventory"** ✅
+
 - ✅ File created: `src/pages/admin/Inventory/index.tsx`
 - ✅ Menunggu detection dari plugin
 - ✅ Route akan tersedia: `/admin/inventory`
@@ -29,6 +32,7 @@ Lihat output terminal:
 ## 🔥 Cara Kerja Plugin:
 
 ### **1. Saat Dev Server Start:**
+
 ```bash
 npm run dev
 
@@ -39,6 +43,7 @@ npm run dev
 ```
 
 ### **2. Saat Ada File Baru:**
+
 ```bash
 # Anda buat file:
 src/pages/admin/NewPage/index.tsx
@@ -55,6 +60,7 @@ src/pages/admin/NewPage/index.tsx
 ```
 
 ### **3. Saat File Dihapus:**
+
 ```bash
 # Anda hapus folder:
 src/pages/admin/OldPage/
@@ -100,12 +106,14 @@ Dari file `generated-routes.tsx`:
 ## 🎮 Test Sekarang!
 
 ### **Test 1: Buka Customers Page**
+
 ```
 URL: http://localhost:5173/admin/customers
 Expected: Customers page dengan green success banner
 ```
 
 ### **Test 2: Buka Inventory Page**
+
 ```
 URL: http://localhost:5173/admin/inventory
 Expected: Inventory page dengan purple gradient header
@@ -144,6 +152,7 @@ Expected: Inventory page dengan purple gradient header
 ## 💡 Tips & Tricks:
 
 ### **Cepat Bikin Page Baru:**
+
 ```bash
 # Terminal command untuk quick create:
 mkdir src/pages/admin/Sales
@@ -153,6 +162,7 @@ echo "const Sales = () => <div>Sales</div>; export default Sales;" > src/pages/a
 ```
 
 ### **Debug: Check Generated File:**
+
 ```bash
 # Lihat isi file yang di-generate:
 cat src/routes/generated-routes.tsx
@@ -161,6 +171,7 @@ cat src/routes/generated-routes.tsx
 ```
 
 ### **Debug: Check Console:**
+
 ```bash
 # Lihat terminal saat dev server running
 # Setiap perubahan akan log:
@@ -180,6 +191,7 @@ cat src/routes/generated-routes.tsx
 ✅ Tidak perlu manual refresh browser
 
 **Hanya:**
+
 1. Buat folder
 2. Buat index.tsx
 3. Save file

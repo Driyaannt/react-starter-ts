@@ -17,7 +17,8 @@ const FullyAutomated = () => {
           <div className="text-4xl mb-3">✅</div>
           <h3 className="font-bold text-green-800 mb-2">Auto Export</h3>
           <p className="text-green-700 text-sm">
-            Export added to <code className="bg-green-100 px-1">index.ts</code> automatically
+            Export added to <code className="bg-green-100 px-1">index.ts</code>{" "}
+            automatically
           </p>
         </div>
 
@@ -25,7 +26,9 @@ const FullyAutomated = () => {
           <div className="text-4xl mb-3">🚀</div>
           <h3 className="font-bold text-blue-800 mb-2">Auto Route</h3>
           <p className="text-blue-700 text-sm">
-            Route <code className="bg-blue-100 px-1">/admin/fully-automated</code> created automatically
+            Route{" "}
+            <code className="bg-blue-100 px-1">/admin/fully-automated</code>{" "}
+            created automatically
           </p>
         </div>
 
@@ -43,8 +46,17 @@ const FullyAutomated = () => {
           📋 What I Did (ONLY 2 Steps!)
         </h3>
         <ol className="list-decimal list-inside space-y-2 text-yellow-700">
-          <li>Created folder: <code className="bg-yellow-100 px-2 py-1 rounded">src/pages/admin/FullyAutomated/</code></li>
-          <li>Created file: <code className="bg-yellow-100 px-2 py-1 rounded">index.tsx</code> with component</li>
+          <li>
+            Created folder:{" "}
+            <code className="bg-yellow-100 px-2 py-1 rounded">
+              src/pages/admin/FullyAutomated/
+            </code>
+          </li>
+          <li>
+            Created file:{" "}
+            <code className="bg-yellow-100 px-2 py-1 rounded">index.tsx</code>{" "}
+            with component
+          </li>
         </ol>
         <p className="mt-4 font-bold text-yellow-800">
           That's it! Everything else happened automatically! 🎉
@@ -59,25 +71,36 @@ const FullyAutomated = () => {
           <div className="flex items-start">
             <span className="text-green-500 mr-2">✓</span>
             <div>
-              <strong>Step 1:</strong> Detected new folder <code className="bg-gray-100 px-2 py-1 rounded">FullyAutomated/</code>
+              <strong>Step 1:</strong> Detected new folder{" "}
+              <code className="bg-gray-100 px-2 py-1 rounded">
+                FullyAutomated/
+              </code>
             </div>
           </div>
           <div className="flex items-start">
             <span className="text-green-500 mr-2">✓</span>
             <div>
-              <strong>Step 2:</strong> Detected <code className="bg-gray-100 px-2 py-1 rounded">index.tsx</code> file exists
+              <strong>Step 2:</strong> Detected{" "}
+              <code className="bg-gray-100 px-2 py-1 rounded">index.tsx</code>{" "}
+              file exists
             </div>
           </div>
           <div className="flex items-start">
             <span className="text-green-500 mr-2">✓</span>
             <div>
-              <strong>Step 3:</strong> Added export to <code className="bg-gray-100 px-2 py-1 rounded">pages/admin/index.ts</code>
+              <strong>Step 3:</strong> Added export to{" "}
+              <code className="bg-gray-100 px-2 py-1 rounded">
+                pages/admin/index.ts
+              </code>
             </div>
           </div>
           <div className="flex items-start">
             <span className="text-green-500 mr-2">✓</span>
             <div>
-              <strong>Step 4:</strong> Generated route config in <code className="bg-gray-100 px-2 py-1 rounded">generated-routes.tsx</code>
+              <strong>Step 4:</strong> Generated route config in{" "}
+              <code className="bg-gray-100 px-2 py-1 rounded">
+                generated-routes.tsx
+              </code>
             </div>
           </div>
           <div className="flex items-start">
@@ -100,9 +123,7 @@ const FullyAutomated = () => {
           <span className="text-3xl mr-2">💎</span>
           TRUE ZERO-CONFIG SYSTEM
         </h3>
-        <p className="text-gray-700 mb-3">
-          No need to:
-        </p>
+        <p className="text-gray-700 mb-3">No need to:</p>
         <ul className="space-y-2 text-gray-700">
           <li className="flex items-center">
             <span className="text-red-500 mr-2">✗</span>
