@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-routes": "node scripts/generate-routes.js",
+    "watch-routes": "node scripts/watch-routes.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

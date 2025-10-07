@@ -1,25 +1,34 @@
+// Import auto-generated paths to ensure consistency
+import { GENERATED_PATHS } from "@/routes/generated-routes";
+
 // Route constants for type safety and consistency
+// Now using auto-generated paths from generated-routes.tsx
 export const ROUTES = {
   // Auth routes
-  LOGIN: "/admin/login",
+  LOGIN: GENERATED_PATHS.LOGIN,
 
   // Main app routes
   ROOT: "/admin",
-  DASHBOARD: "/admin/dashboard",
+  DASHBOARD: GENERATED_PATHS.DASHBOARD,
 
   // User management
-  USERS: "/admin/users",
-  USERS_PAGE: "/admin/users-page",
+  USERS: GENERATED_PATHS.USER_MANAGEMENT, // Points to UserManagement component
+  USERS_PAGE: GENERATED_PATHS.USERS_PAGE, // Points to UsersPage component
 
   // Business
-  PRODUCTS: "/admin/products",
-  ORDERS: "/admin/orders",
-  ANALYTICS: "/admin/analytics",
-  TRANSACTIONS: "/admin/transactions",
+  PRODUCTS: GENERATED_PATHS.PRODUCTS_PAGE,
+  ORDERS: GENERATED_PATHS.ORDERS_PAGE,
+  ANALYTICS: GENERATED_PATHS.ANALYTICS_PAGE,
+  TRANSACTIONS: GENERATED_PATHS.TRANSACTIONS_PAGE,
 
   // Settings
-  SETTINGS: "/admin/settings",
-  PROFILE_SETTINGS: "/admin/profile-settings",
+  SETTINGS: GENERATED_PATHS.SETTINGS_PAGE,
+  PROFILE_SETTINGS: GENERATED_PATHS.PROFILE_SETTINGS,
+  
+  // Additional auto-generated routes
+  CUSTOMERS: GENERATED_PATHS.CUSTOMERS,
+  INVENTORY: GENERATED_PATHS.INVENTORY,
+  REPORTS: GENERATED_PATHS.REPORTS_PAGE,
 } as const;
 
 // Route metadata for navigation
@@ -101,8 +110,9 @@ export const ROUTE_METADATA: Record<string, RouteMetadata> = {
 export const getRouteFromPageId = (pageId: string): string => {
   const routeMap: Record<string, string> = {
     dashboard: ROUTES.DASHBOARD,
-    users: ROUTES.USERS,
-    "users-page": ROUTES.USERS_PAGE,
+    users: ROUTES.USERS, // Points to /admin/user-management
+    "users-page": ROUTES.USERS_PAGE, // Points to /admin/users
+    "user-management": ROUTES.USERS, // Alias for user-management
     products: ROUTES.PRODUCTS,
     orders: ROUTES.ORDERS,
     analytics: ROUTES.ANALYTICS,
@@ -118,8 +128,8 @@ export const getRouteFromPageId = (pageId: string): string => {
 export const getPageIdFromRoute = (path: string): string => {
   const pageMap: Record<string, string> = {
     [ROUTES.DASHBOARD]: "dashboard",
-    [ROUTES.USERS]: "users",
-    [ROUTES.USERS_PAGE]: "users-page",
+    [ROUTES.USERS]: "users", // /admin/user-management → users
+    [ROUTES.USERS_PAGE]: "users-page", // /admin/users → users-page
     [ROUTES.PRODUCTS]: "products",
     [ROUTES.ORDERS]: "orders",
     [ROUTES.ANALYTICS]: "analytics",
