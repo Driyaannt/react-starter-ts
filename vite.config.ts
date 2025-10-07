@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     react(), // Gunakan konfigurasi default React
     // Sementara disable auto-routes untuk testing HMR
-    // autoRoutesPlugin(), 
+    // autoRoutesPlugin(),
   ],
   resolve: {
     alias: {
@@ -19,7 +19,7 @@ export default defineConfig({
   server: {
     // Simplified HMR configuration
     hmr: true, // Enable HMR dengan setting default
-    host: 'localhost',
+    host: "localhost",
     port: 5173,
     // Force reload on file changes
     watch: {

@@ -34,11 +34,13 @@ src/
 ## 🛠️ Instalasi dan Menjalankan
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Jalankan development server:**
+
    ```bash
    npm run dev
    ```
@@ -51,17 +53,20 @@ src/
 ## 🔐 Demo Login
 
 Untuk testing, gunakan kredensial berikut:
+
 - **Username:** `admin`
 - **Password:** `password`
 
 ## 💡 Cara Penggunaan
 
 ### Authentication
+
 - Aplikasi menggunakan React Context untuk mengelola state authentication
 - User login akan disimpan di localStorage untuk persist session
 - Logout akan menghapus session dan redirect ke halaman login
 
 ### Layout System
+
 - **Header:** Menampilkan logo aplikasi, user info, dan tombol logout
 - **Sidebar:** Menu navigasi yang bisa dikecilkan/diperbesar
 - **Main Content:** Area konten utama dengan dashboard
@@ -70,41 +75,46 @@ Untuk testing, gunakan kredensial berikut:
 ### Customization
 
 #### Menambah Menu Sidebar
+
 Edit file `src/components/Sidebar.tsx` dan tambahkan item baru ke array `menuItems`:
 
 ```typescript
 const menuItems: MenuItem[] = [
   // ... existing items
-  { id: 'new-menu', label: 'New Menu', icon: '🆕', path: '/new-menu' },
+  { id: "new-menu", label: "New Menu", icon: "🆕", path: "/new-menu" },
 ];
 ```
 
 #### Mengubah Theme Colors
+
 Edit file CSS yang sesuai untuk mengubah warna tema:
+
 - Primary color: `#667eea`
 - Secondary color: `#764ba2`
 - Dark color: `#2c3e50`
 
 #### Menambah Halaman Baru
+
 1. Buat component baru di folder `src/components/`
 2. Import dan gunakan di `App.tsx` atau buat routing system
 
 #### Menggunakan Simple Routing
+
 Untuk menggunakan routing sederhana yang sudah disediakan:
 
 ```typescript
 // Ganti Layout dengan LayoutWithRouting di App.tsx
-import LayoutWithRouting from './components/LayoutWithRouting';
+import LayoutWithRouting from "./components/LayoutWithRouting";
 
-return (
-  <LayoutWithRouting />
-);
+return <LayoutWithRouting />;
 ```
 
 ## 🎨 Komponen Utama
 
 ### AuthProvider
+
 Context provider yang mengelola authentication state dan menyediakan:
+
 - `user`: Object user yang sedang login
 - `isAuthenticated`: Boolean status login
 - `login()`: Function untuk login
@@ -112,10 +122,13 @@ Context provider yang mengelola authentication state dan menyediakan:
 - `loading`: Boolean loading state
 
 ### Layout
+
 Wrapper component yang menyediakan struktur halaman lengkap dengan header, sidebar, dan footer.
 
 ### Dashboard
+
 Halaman utama setelah login yang menampilkan:
+
 - Statistics cards
 - Recent activities
 - Quick action buttons
@@ -131,6 +144,7 @@ Halaman utama setelah login yang menampilkan:
 ## 📱 Responsive Design
 
 Aplikasi sudah dioptimalkan untuk berbagai ukuran layar:
+
 - **Desktop:** Full layout dengan sidebar expanded
 - **Tablet:** Sidebar otomatis collapsed
 - **Mobile:** Layout yang disesuaikan untuk layar kecil

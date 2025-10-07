@@ -95,19 +95,18 @@ const Login: React.FC = () => {
               )}
             </button>
           </form>
-          
+
           {/* Test HMR - komponen ini akan berubah secara real-time */}
           <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800 text-center">
             <p className="text-sm text-green-700 dark:text-green-300 font-semibold">
               🚀 HMR TEST: Berhasil! Perubahan langsung muncul!
             </p>
             <p className="text-xs text-green-600 dark:text-green-400 mt-1">
-              Last Update: {new Date().toLocaleString('id-ID')}
+              Last Update: {new Date().toLocaleString("id-ID")}
             </p>
             <div className="mt-2 text-xs text-green-500 dark:text-green-400">
-              • Warna berubah dari ungu ke hijau ✅
-              • Text berubah dari Inggris ke Indonesia ✅
-              • Timestamp dalam format Indonesia ✅
+              • Warna berubah dari ungu ke hijau ✅ • Text berubah dari Inggris
+              ke Indonesia ✅ • Timestamp dalam format Indonesia ✅
             </div>
           </div>
         </div>
