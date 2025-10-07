@@ -17,8 +17,112 @@ function folderNameToPath(name) {
   return routePath || name.toLowerCase();
 }
 
+// Function to generate component name from folder name
+function generateComponentName(folderName) {
+  // Remove 'Page' suffix if exists, keep original case
+  return folderName.replace(/Page$/, '');
+}
+
+// Function to generate page template
+function generatePageTemplate(componentName, pageType = 'admin') {
+  const routePath = folderNameToPath(componentName);
+  const displayName = componentName
+    .replace(/([A-Z])/g, ' $1')
+    .trim()
+    .replace(/\s+/g, ' ');
+
+  return `import React from 'react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+/**
+ * ${displayName} Page
+ * Auto-generated template - customize as needed
+ * Route: /${pageType === 'admin' ? 'admin/' : ''}${routePath}
+ */
+const ${componentName}: React.FC = () => {
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-400 bg-clip-text text-transparent">
+            ${displayName}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">
+            Manage your ${displayName.toLowerCase()} here
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline">
+            Cancel
+          </Button>
+          <Button>
+            Save Changes
+          </Button>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <Card>
+        <CardHeader>
+          <CardTitle>${displayName} Content</CardTitle>
+          <CardDescription>
+            This is an auto-generated template. Start building your component here.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Your content goes here. This template includes:
+            </p>
+            <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              <li>Pre-configured UI components from shadcn/ui</li>
+              <li>Responsive layout structure</li>
+              <li>Dark mode support</li>
+              <li>TypeScript typing</li>
+            </ul>
+            <div className="pt-4 border-t">
+              <p className="text-xs text-gray-500 dark:text-gray-500">
+                💡 Tip: Remove this template content and add your custom logic
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default ${componentName};
+`;
+}
+
+// Function to create page with template
+function createPageWithTemplate(folderPath, folderName, pageType = 'admin') {
+  const indexPath = path.join(folderPath, 'index.tsx');
+  
+  // Only create if doesn't exist
+  if (!fs.existsSync(indexPath)) {
+    const componentName = generateComponentName(folderName);
+    const template = generatePageTemplate(componentName, pageType);
+    
+    fs.writeFileSync(indexPath, template);
+    console.log(`   ✨ Created template for: ${folderName}`);
+    return true;
+  }
+  
+  return false;
+}
+
 // Function to scan pages directory and generate routes
-function generateRoutesContent() {
+function generateRoutesContent(autoCreateTemplates = false) {
   const pagesDir = path.join(__dirname, '../src/pages');
   const adminDir = path.join(pagesDir, 'admin');
   const userDir = path.join(pagesDir, 'user');
@@ -28,6 +132,7 @@ function generateRoutesContent() {
   const imports = [];
   const adminFolders = [];
   const userFolders = [];
+  let templatesCreated = false;
   
   // Scan admin pages
   if (fs.existsSync(adminDir)) {
@@ -35,16 +140,27 @@ function generateRoutesContent() {
     
     folders.forEach(folder => {
       const folderPath = path.join(adminDir, folder);
-      const stat = fs.statSync(folderPath);
       
-      if (stat.isDirectory()) {
-        const indexPath = path.join(folderPath, 'index.tsx');
-        if (fs.existsSync(indexPath)) {
-          const routePath = folderNameToPath(folder);
-          imports.push(`import ${folder} from "@/pages/admin/${folder}";`);
-          adminRoutes.push(`  { path: "${routePath}", element: <${folder} /> }`);
-          adminFolders.push(folder);
+      try {
+        const stat = fs.statSync(folderPath);
+        
+        if (stat.isDirectory()) {
+          // Auto-create template if enabled and folder is empty
+          if (autoCreateTemplates) {
+            const created = createPageWithTemplate(folderPath, folder, 'admin');
+            if (created) templatesCreated = true;
+          }
+          
+          const indexPath = path.join(folderPath, 'index.tsx');
+          if (fs.existsSync(indexPath)) {
+            const routePath = folderNameToPath(folder);
+            imports.push(`import ${folder} from "@/pages/admin/${folder}";`);
+            adminRoutes.push(`  { path: "${routePath}", element: <${folder} /> }`);
+            adminFolders.push(folder);
+          }
         }
+      } catch (error) {
+        // Skip folders with errors
       }
     });
   }
@@ -55,16 +171,27 @@ function generateRoutesContent() {
     
     folders.forEach(folder => {
       const folderPath = path.join(userDir, folder);
-      const stat = fs.statSync(folderPath);
       
-      if (stat.isDirectory()) {
-        const indexPath = path.join(folderPath, 'index.tsx');
-        if (fs.existsSync(indexPath)) {
-          const routePath = folderNameToPath(folder);
-          imports.push(`import ${folder} from "@/pages/user/${folder}";`);
-          userRoutes.push(`  { path: "/${routePath}", element: <${folder} /> }`);
-          userFolders.push(folder);
+      try {
+        const stat = fs.statSync(folderPath);
+        
+        if (stat.isDirectory()) {
+          // Auto-create template if enabled and folder is empty
+          if (autoCreateTemplates) {
+            const created = createPageWithTemplate(folderPath, folder, 'user');
+            if (created) templatesCreated = true;
+          }
+          
+          const indexPath = path.join(folderPath, 'index.tsx');
+          if (fs.existsSync(indexPath)) {
+            const routePath = folderNameToPath(folder);
+            imports.push(`import ${folder} from "@/pages/user/${folder}";`);
+            userRoutes.push(`  { path: "/${routePath}", element: <${folder} /> }`);
+            userFolders.push(folder);
+          }
         }
+      } catch (error) {
+        // Skip folders with errors
       }
     });
   }
@@ -149,7 +276,7 @@ ${userPathsConst.join(',\n')},
 } as const;
 `;
   
-  return content;
+  return { content, templatesCreated };
 }
 
 // Vite plugin
@@ -161,21 +288,23 @@ export default function autoRoutesPlugin() {
   let regenerateTimeout = null;
   
   // Debounced generate routes - prevents multiple rapid regenerations
-  function debouncedGenerateRoutes(reason = 'File change') {
+  function debouncedGenerateRoutes(reason = 'File change', autoCreateTemplates = false) {
     if (regenerateTimeout) {
       clearTimeout(regenerateTimeout);
     }
     
     regenerateTimeout = setTimeout(() => {
       console.log(`\n🔄 [Auto Routes] ${reason}`);
-      generateRoutes();
+      generateRoutes(autoCreateTemplates);
     }, 150); // Wait 150ms for multiple file operations to complete
   }
   
   // Generate routes initially
-  function generateRoutes() {
+  function generateRoutes(autoCreateTemplates = false) {
     try {
-      const content = generateRoutesContent();
+      const result = generateRoutesContent(autoCreateTemplates);
+      const content = result.content;
+      const templatesCreated = result.templatesCreated;
       const routesDir = path.dirname(ROUTES_FILE);
       
       if (!fs.existsSync(routesDir)) {
@@ -187,6 +316,9 @@ export default function autoRoutesPlugin() {
       console.log('✅ [Auto Routes] Routes regenerated successfully!');
       console.log(`   📝 File: ${path.relative(process.cwd(), ROUTES_FILE)}`);
       
+      if (templatesCreated) {
+        console.log('   ✨ Templates auto-created for new pages!');
+      }      
       // Trigger HMR if server is running
       if (viteServer) {
         const module = viteServer.moduleGraph.getModuleById(ROUTES_FILE);
@@ -209,7 +341,9 @@ export default function autoRoutesPlugin() {
     // Generate routes when plugin is loaded
     configResolved() {
       console.log('\n🚀 [Auto Routes Plugin] Activated');
-      generateRoutes();
+      // First pass: create templates for empty folders
+      console.log('   🔍 Scanning for empty folders...');
+      generateRoutes(true);
     },
     
     // Store Vite dev server instance
@@ -310,14 +444,18 @@ export default function autoRoutesPlugin() {
         const normalizedDir = dir.replace(/\\/g, '/');
         if (normalizedDir.includes('/pages/admin/') || normalizedDir.includes('/pages/user/')) {
           const folderName = path.basename(dir);
-          // Check if index.tsx exists after a short delay (in case it's being created)
-          setTimeout(() => {
-            const indexPath = path.join(dir, 'index.tsx');
-            if (fs.existsSync(indexPath)) {
-              console.log(`\n📁 [Auto Routes] New folder detected: ${folderName}`);
-              debouncedGenerateRoutes(`New folder: ${folderName}`);
-            }
-          }, 200);
+          const parentFolder = path.basename(path.dirname(dir));
+          
+          // Only process if it's directly under admin or user folders
+          if (parentFolder === 'admin' || parentFolder === 'user') {
+            console.log(`\n📁 [Auto Routes] New folder detected: ${folderName}`);
+            
+            // Trigger template creation immediately
+            setTimeout(() => {
+              console.log(`   🎨 [Auto Routes] Creating template for: ${folderName}...`);
+              debouncedGenerateRoutes(`New folder with template: ${folderName}`, true);
+            }, 300); // Give time for folder creation to complete
+          }
         }
       });
       

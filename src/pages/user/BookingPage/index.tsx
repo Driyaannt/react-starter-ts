@@ -41,7 +41,7 @@ interface BookingFormData {
 }
 
 interface BookingPageProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 const BookingPage: React.FC<BookingPageProps> = ({ onBack }) => {
@@ -169,7 +169,7 @@ const BookingPage: React.FC<BookingPageProps> = ({ onBack }) => {
             <div className="flex items-center">
               <Button
                 variant="ghost"
-                onClick={onBack}
+                onClick={() => onBack ? onBack() : window.history.back()}
                 className="mr-4 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -599,7 +599,11 @@ const BookingPage: React.FC<BookingPageProps> = ({ onBack }) => {
             <AlertDialogAction
               onClick={() => {
                 setShowBookingSuccess(false);
-                onBack();
+                if (onBack) {
+                  onBack();
+                } else {
+                  window.history.back();
+                }
               }}
             >
               Back to Home
