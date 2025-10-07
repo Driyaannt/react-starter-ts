@@ -207,7 +207,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         {!isCollapsed && (
           <div className="p-4 border-t border-gray-100">
             <div className="text-xs text-gray-500">
-              <p className="font-medium">MyApp v1.0</p>
+              <p className="font-medium">MediCare Clinic v1.0</p>
               <p className="mt-1">© 2024 All rights reserved</p>
             </div>
           </div>

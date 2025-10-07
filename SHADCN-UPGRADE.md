@@ -1,6 +1,6 @@
-# React TypeScript Starter Code with shadcn/ui
+# MediCare Clinic - Beauty Clinic Management with shadcn/ui
 
-🎉 **Starter code telah berhasil diupgrade menggunakan shadcn/ui!**
+🎉 **MediCare Clinic telah berhasil diupgrade menggunakan shadcn/ui!**
 
 ## 🚀 Apa yang Telah Dilakukan
 

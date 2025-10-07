@@ -1,6 +1,6 @@
-# React + TypeScript + Vite
+# MediCare Clinic - Beauty Clinic Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistem manajemen klinik kecantikan modern yang dibangun dengan React + TypeScript + Vite. Aplikasi ini menyediakan solusi lengkap untuk mengelola operasional klinik kecantikan dengan antarmuka yang elegan dan mudah digunakan.
 
 Currently, two official plugins are available:
 

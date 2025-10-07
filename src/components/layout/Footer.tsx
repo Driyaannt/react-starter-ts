@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-              MyApp
+              MediCare Clinic
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
               Your reliable application solution for managing users, products,
@@ -120,7 +120,7 @@ const Footer: React.FC = () => {
         {/* Bottom Section */}
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            © {currentYear} MyApp. {t.footer.allRightsReserved}
+            © {currentYear} MediCare Clinic. {t.footer.allRightsReserved}
           </p>
           <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
             <span>{t.footer.madeWith}</span>

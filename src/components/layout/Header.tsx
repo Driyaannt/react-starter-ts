@@ -67,7 +67,7 @@ const Header: React.FC<HeaderProps> = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-gray-800 dark:to-gray-900 text-white shadow-lg">
       <div className="flex justify-between items-center px-6 py-4 max-w-full">
         <div className="flex items-center">
-          <h1 className="text-xl font-bold">MyApp</h1>
+          <h1 className="text-xl font-bold">MediCare Clinic</h1>
         </div>
         <div className="flex items-center gap-4">
           {/* Language Selector */}

@@ -1,6 +1,6 @@
-# React TypeScript Starter Code
+# MediCare Clinic - Beauty Clinic Management System
 
-Starter code React TypeScript dengan fitur lengkap termasuk sistem login, sidebar, header, dan footer.
+Sistem manajemen klinik kecantikan berbasis React TypeScript dengan fitur lengkap termasuk sistem login, sidebar, header, dan footer.
 
 ## 🚀 Fitur
 
@@ -144,4 +144,4 @@ Aplikasi sudah dioptimalkan untuk berbagai ukuran layar:
 
 ## 📄 License
 
-MIT License - feel free to use this starter code for your projects!
+MIT License - feel free to use MediCare Clinic for your beauty clinic projects!

@@ -1,5 +1,5 @@
 // 🤖 AUTO-GENERATED - DO NOT EDIT MANUALLY
-// Generated at: 10/7/2025, 11:13:56 AM
+// Generated at: 10/7/2025, 11:54:07 AM
 
 // Admin Pages Exports
 export { default as AnalyticsPage } from "./AnalyticsPage";
@@ -14,6 +14,8 @@ export { default as ProfileSettings } from "./ProfileSettings";
 export { default as RealTimeTest } from "./RealTimeTest";
 export { default as ReportsPage } from "./ReportsPage";
 export { default as SettingsPage } from "./SettingsPage";
+export { default as TestingWrong } from "./TestingWrong";
+export { default as TestManualCreate } from "./TestManualCreate";
 export { default as TransactionsPage } from "./TransactionsPage";
 export { default as UserManagement } from "./UserManagement";
 export { default as UsersPage } from "./UsersPage";

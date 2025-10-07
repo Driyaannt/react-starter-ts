@@ -23,10 +23,10 @@ const Login: React.FC = () => {
         <div className="space-y-3 text-center relative p-6">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-700/20 dark:to-purple-900/20 rounded-t-xl opacity-50 transition-colors duration-500 ease-out"></div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent relative z-10 transition-all duration-400 ease-out">
-            Admin Login
+            🏥 Admin Portal
           </h1>
           <p className="text-gray-600 dark:text-gray-300 relative z-10 text-lg transition-colors duration-400 ease-out">
-            Welcome back! Please sign in to continue.
+            Selamat datang! Silakan masuk untuk melanjutkan.
           </p>
         </div>
         <div className="p-6">
@@ -95,16 +95,20 @@ const Login: React.FC = () => {
               )}
             </button>
           </form>
-          <div className="mt-6 p-4 bg-blue-50 dark:bg-gray-700/50 rounded-md border border-blue-200 dark:border-gray-600 transition-all duration-400 ease-out">
-            <p className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2 transition-colors duration-400 ease-out">
-              Demo Credentials
+          
+          {/* Test HMR - komponen ini akan berubah secara real-time */}
+          <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800 text-center">
+            <p className="text-sm text-green-700 dark:text-green-300 font-semibold">
+              🚀 HMR TEST: Berhasil! Perubahan langsung muncul!
             </p>
-            <p className="text-sm text-blue-700 dark:text-blue-400 transition-colors duration-400 ease-out">
-              Username: admin
+            <p className="text-xs text-green-600 dark:text-green-400 mt-1">
+              Last Update: {new Date().toLocaleString('id-ID')}
             </p>
-            <p className="text-sm text-blue-700 dark:text-blue-400 transition-colors duration-400 ease-out">
-              Password: admin123
-            </p>
+            <div className="mt-2 text-xs text-green-500 dark:text-green-400">
+              • Warna berubah dari ungu ke hijau ✅
+              • Text berubah dari Inggris ke Indonesia ✅
+              • Timestamp dalam format Indonesia ✅
+            </div>
           </div>
         </div>
       </div>
